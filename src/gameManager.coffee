@@ -1,9 +1,7 @@
-console.log "gameManager.coffee"
 
 generateGame = (sizeX, sizeY, bomNum) ->
 
-
-	#盤面のサイズ, 地雷の数
+	#盤面のサイズ, 地雷の数 (デフォルトは 5 )
 	SIZE_X   = 5
 	SIZE_Y   = 5
 	BOMB_NUM = 5
@@ -25,7 +23,6 @@ generateGame = (sizeX, sizeY, bomNum) ->
 
 
 	initBoards =  (xSize, ySize, bomNum)->
-		console.log "initBoards"
 		initFrontBoard(xSize, ySize)
 		initUnderBoard(xSize, ySize, bomNum)
 
@@ -131,7 +128,6 @@ generateGame = (sizeX, sizeY, bomNum) ->
 
 
 	initBoards SIZE_X, SIZE_Y, BOMB_NUM
-	dumpBoard UNDER_BOARD
 
 	API = {}
 	API.open = open

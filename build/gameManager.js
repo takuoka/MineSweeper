@@ -1,8 +1,6 @@
 (function() {
   var generateGame;
 
-  console.log("gameManager.coffee");
-
   generateGame = function(sizeX, sizeY, bomNum) {
     var API, BOMB_CHAR, BOMB_NUM, COVER_CHAR, FLAG_CHAR, FRONT_BOARD, SIZE_X, SIZE_Y, UNDER_BOARD, dumpBoard, dumpBoards, getRandomPlace, getSorroundingPlace, initBoards, initFrontBoard, initUnderBoard, open, putFlag, rand;
     SIZE_X = 5;
@@ -23,7 +21,6 @@
     FLAG_CHAR = 'F';
     COVER_CHAR = 'C';
     initBoards = function(xSize, ySize, bomNum) {
-      console.log("initBoards");
       initFrontBoard(xSize, ySize);
       return initUnderBoard(xSize, ySize, bomNum);
     };
@@ -155,7 +152,6 @@
       return console.log("---------");
     };
     initBoards(SIZE_X, SIZE_Y, BOMB_NUM);
-    dumpBoard(UNDER_BOARD);
     API = {};
     API.open = open;
     API.putFlag = putFlag;

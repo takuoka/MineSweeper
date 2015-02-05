@@ -1,14 +1,15 @@
 console.log "script.coffee"
 
 
-game = generateGame 10, 10, 50
+game = generateGame 10, 10, 30
 
-
-game.open 0,0
+game.open 0, 0
 game.dumpBoards()
 
-copy = game.getUnderBoard()
-console.log copy
+
+
+# copy = game.getUnderBoard()
+# console.log copy
 
 # wait = (time, callback)-> setTimeout callback, time
 # wait 1000, ->
