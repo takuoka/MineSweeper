@@ -28,11 +28,6 @@ initUserBoard = (vSize, hSize) ->
 
 
 initContentsBoard = (vSize, hSize, bomNum) ->
-	console.log "initContentsBoard"
-	for v in [0..vSize-1]
-		contentsBoard.push []
-		for h in [0..hSize-1]
-			contentsBoard[v].push 0
 
 	rand = (max) -> Math.round Math.random() * max
 
@@ -64,6 +59,13 @@ initContentsBoard = (vSize, hSize, bomNum) ->
 		increment v+1, h
 		increment v+1, h+1
 
+
+	console.log "initContentsBoard"
+
+	for v in [0..vSize-1]
+		contentsBoard.push []
+		for h in [0..hSize-1]
+			contentsBoard[v].push 0
 
 	for i in [0..bomNum-1]
 		addBomb()
