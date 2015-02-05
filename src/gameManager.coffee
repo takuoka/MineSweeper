@@ -70,6 +70,13 @@ open = (x, y) ->
 	return value
 
 
+putFlag = (x, y) ->
+	if FRONT_BOARD[y][x] is COVER_CHAR
+		FRONT_BOARD[y][x] = FLAG_CHAR
+	else if FRONT_BOARD[y][x] is FLAG_CHAR
+		FRONT_BOARD[y][x] = COVER_CHAR
+
+
 
 # --------------- util methods ------------------
 
@@ -118,8 +125,15 @@ dumpBoard UNDER_BOARD
 open 0,0
 dumpBoard FRONT_BOARD
 
+wait = (time, callback)-> setTimeout callback, time
 
+wait 1000, ->
+	putFlag 2,2
+	dumpBoard FRONT_BOARD
 
+	wait 1000, ->
+		putFlag 2,2
+		dumpBoard FRONT_BOARD
 
 
 

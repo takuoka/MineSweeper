@@ -1,5 +1,5 @@
 (function() {
-  var BOMB_CHAR, BOMB_NUM, COVER_CHAR, FLAG_CHAR, FRONT_BOARD, SIZE_X, SIZE_Y, UNDER_BOARD, dumpBoard, getRandomPlace, getSorroundingPlace, initBoards, initFrontBoard, initUnderBoard, open, rand;
+  var BOMB_CHAR, BOMB_NUM, COVER_CHAR, FLAG_CHAR, FRONT_BOARD, SIZE_X, SIZE_Y, UNDER_BOARD, dumpBoard, getRandomPlace, getSorroundingPlace, initBoards, initFrontBoard, initUnderBoard, open, putFlag, rand, wait;
 
   console.log("gameManager.coffee");
 
@@ -101,6 +101,14 @@
     return value;
   };
 
+  putFlag = function(x, y) {
+    if (FRONT_BOARD[y][x] === COVER_CHAR) {
+      return FRONT_BOARD[y][x] = FLAG_CHAR;
+    } else if (FRONT_BOARD[y][x] === FLAG_CHAR) {
+      return FRONT_BOARD[y][x] = COVER_CHAR;
+    }
+  };
+
   rand = function(max) {
     return Math.round(Math.random() * max);
   };
@@ -154,5 +162,18 @@
   open(0, 0);
 
   dumpBoard(FRONT_BOARD);
+
+  wait = function(time, callback) {
+    return setTimeout(callback, time);
+  };
+
+  wait(1000, function() {
+    putFlag(2, 2);
+    dumpBoard(FRONT_BOARD);
+    return wait(1000, function() {
+      putFlag(2, 2);
+      return dumpBoard(FRONT_BOARD);
+    });
+  });
 
 }).call(this);
