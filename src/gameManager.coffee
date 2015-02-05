@@ -46,7 +46,7 @@ generateGame = (sizeX, sizeY, bomNum) ->
 				if UNDER_BOARD[sy][sx] isnt BOMB_CHAR
 					UNDER_BOARD[sy][sx] += 1
 
-		#２つの盤面の初期化
+		#盤面の初期化
 		for y in [0..ySize-1]
 			UNDER_BOARD.push []
 			for x in [0..xSize-1]
@@ -99,18 +99,18 @@ generateGame = (sizeX, sizeY, bomNum) ->
 
 
 	getSorroundingPlace = (x, y, callback) ->
-		checkAndDo = (x, y) ->
+		checkAndCallBack = (x, y) ->
 			if UNDER_BOARD[y] isnt undefined
 				if UNDER_BOARD[y][x] isnt undefined
 					callback(x, y)
-		checkAndDo x-1, y-1
-		checkAndDo x-1, y
-		checkAndDo x-1, y+1
-		checkAndDo x  , y-1
-		checkAndDo x  , y+1
-		checkAndDo x+1, y-1
-		checkAndDo x+1, y
-		checkAndDo x+1, y+1
+		checkAndCallBack x-1, y-1
+		checkAndCallBack x-1, y
+		checkAndCallBack x-1, y+1
+		checkAndCallBack x  , y-1
+		checkAndCallBack x  , y+1
+		checkAndCallBack x+1, y-1
+		checkAndCallBack x+1, y
+		checkAndCallBack x+1, y+1
 
 
 
@@ -128,6 +128,7 @@ generateGame = (sizeX, sizeY, bomNum) ->
 
 
 	initBoards SIZE_X, SIZE_Y, BOMB_NUM
+
 
 	API = {}
 	API.open = open

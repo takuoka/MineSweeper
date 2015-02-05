@@ -120,22 +120,22 @@
       return place;
     };
     getSorroundingPlace = function(x, y, callback) {
-      var checkAndDo;
-      checkAndDo = function(x, y) {
+      var checkAndCallBack;
+      checkAndCallBack = function(x, y) {
         if (UNDER_BOARD[y] !== void 0) {
           if (UNDER_BOARD[y][x] !== void 0) {
             return callback(x, y);
           }
         }
       };
-      checkAndDo(x - 1, y - 1);
-      checkAndDo(x - 1, y);
-      checkAndDo(x - 1, y + 1);
-      checkAndDo(x, y - 1);
-      checkAndDo(x, y + 1);
-      checkAndDo(x + 1, y - 1);
-      checkAndDo(x + 1, y);
-      return checkAndDo(x + 1, y + 1);
+      checkAndCallBack(x - 1, y - 1);
+      checkAndCallBack(x - 1, y);
+      checkAndCallBack(x - 1, y + 1);
+      checkAndCallBack(x, y - 1);
+      checkAndCallBack(x, y + 1);
+      checkAndCallBack(x + 1, y - 1);
+      checkAndCallBack(x + 1, y);
+      return checkAndCallBack(x + 1, y + 1);
     };
     dumpBoard = function(board) {
       var str, x, xSize, y, ySize, _i, _j, _ref, _ref1;
