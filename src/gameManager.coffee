@@ -16,39 +16,35 @@ BOMB_CHAR = 'B'
 FLAG_CHAR = 'F'#地雷があると確信したときに置くマーク
 
 
-
-initBoards = (ySize, xSize, bomNum) ->
-
+initBoards =  (xSize, ySize, bomNum)->
 	console.log "initBoards"
+	initFrontBoard(xSize, ySize)
+	initUnderBoard(xSize, ySize, bomNum)
 
-	rand = (max) -> Math.round Math.random() * max
 
-	getRandomPlace = ->
-		place = {}
-		place.y = rand ySize - 1
-		place.x = rand xSize - 1
-		return place
+initFrontBoard = (xSize, ySize) ->
+	for y in [0..ySize-1]
+		FRONT_BOARD.push []
+		for x in [0..xSize-1]
+			FRONT_BOARD[y].push ''
 
+
+initUnderBoard = (xSize, ySize, bomNum) ->
 	addBomb = ->
-		p = getRandomPlace()
+		p = getRandomPlace xSize, ySize
 		if UNDER_BOARD[p.y][p.x] isnt BOMB_CHAR
 			UNDER_BOARD[p.y][p.x] = BOMB_CHAR
 		else
 			addBomb()
-
-
-	incrementSorroundingNumbers = (y, x) ->
-		doSomethingAtSorroundingPlace UNDER_BOARD, y, x, (y, x)->
-			UNDER_BOARD[y][x] += 1
-
+	incrementSorroundingNumbers = (x, y) ->
+		getSorroundingPlace UNDER_BOARD, x, y, (sx, sy)->
+			UNDER_BOARD[sy][sx] += 1
 
 	#２つの盤面の初期化
 	for y in [0..ySize-1]
 		UNDER_BOARD.push []
-		FRONT_BOARD.push []
 		for x in [0..xSize-1]
 			UNDER_BOARD[y].push 0
-			FRONT_BOARD[y].push ''
 
 	#地雷の追加
 	for i in [0..bomNum-1]
@@ -58,24 +54,39 @@ initBoards = (ySize, xSize, bomNum) ->
 	for y in [0..ySize-1]
 		for x in [0..xSize-1]
 			if UNDER_BOARD[y][x] is BOMB_CHAR
-				incrementSorroundingNumbers y, x
+				incrementSorroundingNumbers x, y
 
 
 
-doSomethingAtSorroundingPlace = (board, y, x, todo) ->
-	checkAndDo = (y, x) ->
+
+
+
+
+# --------------- util methods ------------------
+
+rand = (max) -> Math.round Math.random() * max
+
+getRandomPlace = (xSize, ySize)->
+	place = {}
+	place.x = rand xSize - 1
+	place.y = rand ySize - 1
+	return place
+
+
+getSorroundingPlace = (board, x, y, callback) ->
+	checkAndDo = (x, y) ->
 		if board[y] isnt undefined
 			if board[y][x] isnt undefined
 				if board[y][x] isnt BOMB_CHAR
-					todo(y,x)
-	checkAndDo y-1, x-1
-	checkAndDo y-1, x
-	checkAndDo y-1, x+1
-	checkAndDo y  , x-1
-	checkAndDo y  , x+1
-	checkAndDo y+1, x-1
-	checkAndDo y+1, x
-	checkAndDo y+1, x+1
+					callback(x, y)
+	checkAndDo x-1, y-1
+	checkAndDo x-1, y
+	checkAndDo x-1, y+1
+	checkAndDo x  , y-1
+	checkAndDo x  , y+1
+	checkAndDo x+1, y-1
+	checkAndDo x+1, y
+	checkAndDo x+1, y+1
 
 
 
@@ -86,7 +97,7 @@ dumpBoard = (board)->
 	for y in [0..ySize-1]
 		str = ""
 		for x in [0..xSize-1]
-			str += board[y][x] + " "
+			str += board[y][x] + "-"
 		console.log str
 
 

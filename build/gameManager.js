@@ -1,5 +1,5 @@
 (function() {
-  var BOMB_CHAR, BOMB_NUM, FLAG_CHAR, FRONT_BOARD, SIZE_X, SIZE_Y, UNDER_BOARD, doSomethingAtSorroundingPlace, dumpBoard, initBoards;
+  var BOMB_CHAR, BOMB_NUM, FLAG_CHAR, FRONT_BOARD, SIZE_X, SIZE_Y, UNDER_BOARD, dumpBoard, getRandomPlace, getSorroundingPlace, initBoards, initFrontBoard, initUnderBoard, rand;
 
   console.log("gameManager.coffee");
 
@@ -17,39 +17,49 @@
 
   FLAG_CHAR = 'F';
 
-  initBoards = function(ySize, xSize, bomNum) {
-    var addBomb, getRandomPlace, i, incrementSorroundingNumbers, rand, x, y, _i, _j, _k, _l, _ref, _ref1, _ref2, _ref3, _results;
+  initBoards = function(xSize, ySize, bomNum) {
     console.log("initBoards");
-    rand = function(max) {
-      return Math.round(Math.random() * max);
-    };
-    getRandomPlace = function() {
-      var place;
-      place = {};
-      place.y = rand(ySize - 1);
-      place.x = rand(xSize - 1);
-      return place;
-    };
+    initFrontBoard(xSize, ySize);
+    return initUnderBoard(xSize, ySize, bomNum);
+  };
+
+  initFrontBoard = function(xSize, ySize) {
+    var x, y, _i, _ref, _results;
+    _results = [];
+    for (y = _i = 0, _ref = ySize - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; y = 0 <= _ref ? ++_i : --_i) {
+      FRONT_BOARD.push([]);
+      _results.push((function() {
+        var _j, _ref1, _results1;
+        _results1 = [];
+        for (x = _j = 0, _ref1 = xSize - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; x = 0 <= _ref1 ? ++_j : --_j) {
+          _results1.push(FRONT_BOARD[y].push(''));
+        }
+        return _results1;
+      })());
+    }
+    return _results;
+  };
+
+  initUnderBoard = function(xSize, ySize, bomNum) {
+    var addBomb, i, incrementSorroundingNumbers, x, y, _i, _j, _k, _l, _ref, _ref1, _ref2, _ref3, _results;
     addBomb = function() {
       var p;
-      p = getRandomPlace();
+      p = getRandomPlace(xSize, ySize);
       if (UNDER_BOARD[p.y][p.x] !== BOMB_CHAR) {
         return UNDER_BOARD[p.y][p.x] = BOMB_CHAR;
       } else {
         return addBomb();
       }
     };
-    incrementSorroundingNumbers = function(y, x) {
-      return doSomethingAtSorroundingPlace(UNDER_BOARD, y, x, function(y, x) {
-        return UNDER_BOARD[y][x] += 1;
+    incrementSorroundingNumbers = function(x, y) {
+      return getSorroundingPlace(UNDER_BOARD, x, y, function(sx, sy) {
+        return UNDER_BOARD[sy][sx] += 1;
       });
     };
     for (y = _i = 0, _ref = ySize - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; y = 0 <= _ref ? ++_i : --_i) {
       UNDER_BOARD.push([]);
-      FRONT_BOARD.push([]);
       for (x = _j = 0, _ref1 = xSize - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; x = 0 <= _ref1 ? ++_j : --_j) {
         UNDER_BOARD[y].push(0);
-        FRONT_BOARD[y].push('');
       }
     }
     for (i = _k = 0, _ref2 = bomNum - 1; 0 <= _ref2 ? _k <= _ref2 : _k >= _ref2; i = 0 <= _ref2 ? ++_k : --_k) {
@@ -62,7 +72,7 @@
         _results1 = [];
         for (x = _m = 0, _ref4 = xSize - 1; 0 <= _ref4 ? _m <= _ref4 : _m >= _ref4; x = 0 <= _ref4 ? ++_m : --_m) {
           if (UNDER_BOARD[y][x] === BOMB_CHAR) {
-            _results1.push(incrementSorroundingNumbers(y, x));
+            _results1.push(incrementSorroundingNumbers(x, y));
           } else {
             _results1.push(void 0);
           }
@@ -73,25 +83,37 @@
     return _results;
   };
 
-  doSomethingAtSorroundingPlace = function(board, y, x, todo) {
+  rand = function(max) {
+    return Math.round(Math.random() * max);
+  };
+
+  getRandomPlace = function(xSize, ySize) {
+    var place;
+    place = {};
+    place.x = rand(xSize - 1);
+    place.y = rand(ySize - 1);
+    return place;
+  };
+
+  getSorroundingPlace = function(board, x, y, callback) {
     var checkAndDo;
-    checkAndDo = function(y, x) {
+    checkAndDo = function(x, y) {
       if (board[y] !== void 0) {
         if (board[y][x] !== void 0) {
           if (board[y][x] !== BOMB_CHAR) {
-            return todo(y, x);
+            return callback(x, y);
           }
         }
       }
     };
-    checkAndDo(y - 1, x - 1);
-    checkAndDo(y - 1, x);
-    checkAndDo(y - 1, x + 1);
-    checkAndDo(y, x - 1);
-    checkAndDo(y, x + 1);
-    checkAndDo(y + 1, x - 1);
-    checkAndDo(y + 1, x);
-    return checkAndDo(y + 1, x + 1);
+    checkAndDo(x - 1, y - 1);
+    checkAndDo(x - 1, y);
+    checkAndDo(x - 1, y + 1);
+    checkAndDo(x, y - 1);
+    checkAndDo(x, y + 1);
+    checkAndDo(x + 1, y - 1);
+    checkAndDo(x + 1, y);
+    return checkAndDo(x + 1, y + 1);
   };
 
   dumpBoard = function(board) {
@@ -102,7 +124,7 @@
     for (y = _i = 0, _ref = ySize - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; y = 0 <= _ref ? ++_i : --_i) {
       str = "";
       for (x = _j = 0, _ref1 = xSize - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; x = 0 <= _ref1 ? ++_j : --_j) {
-        str += board[y][x] + " ";
+        str += board[y][x] + "-";
       }
       _results.push(console.log(str));
     }
