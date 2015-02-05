@@ -1,5 +1,5 @@
 (function() {
-  var game, generateGame, wait;
+  var generateGame;
 
   console.log("gameManager.coffee");
 
@@ -163,23 +163,6 @@
     return API;
   };
 
-  game = generateGame(10, 10, 50);
-
-  game.open(0, 0);
-
-  game.dumpBoards();
-
-  wait = function(time, callback) {
-    return setTimeout(callback, time);
-  };
-
-  wait(1000, function() {
-    game.putFlag(2, 2);
-    game.dumpBoards();
-    return wait(1000, function() {
-      game.putFlag(2, 2);
-      return game.dumpBoards();
-    });
-  });
+  window.generateGame = generateGame;
 
 }).call(this);
