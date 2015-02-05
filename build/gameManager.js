@@ -107,6 +107,11 @@
         return FRONT_BOARD[y][x] = COVER_CHAR;
       }
     };
+    dumpBoards = function() {
+      dumpBoard(UNDER_BOARD);
+      dumpBoard(FRONT_BOARD);
+      return console.log("==============");
+    };
     rand = function(max) {
       return Math.round(Math.random() * max);
     };
@@ -149,17 +154,18 @@
       }
       return console.log("---------");
     };
-    dumpBoards = function() {
-      dumpBoard(UNDER_BOARD);
-      dumpBoard(FRONT_BOARD);
-      return console.log("==============");
-    };
     initBoards(SIZE_X, SIZE_Y, BOMB_NUM);
     dumpBoard(UNDER_BOARD);
     API = {};
     API.open = open;
     API.putFlag = putFlag;
     API.dumpBoards = dumpBoards;
+    API.getUnderBoard = function() {
+      return $.extend(true, [], UNDER_BOARD);
+    };
+    API.getFrontBoard = function() {
+      return $.extend(true, [], FRONT_BOARD);
+    };
     return API;
   };
 

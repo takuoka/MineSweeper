@@ -84,6 +84,11 @@ generateGame = (sizeX, sizeY, bomNum) ->
 			FRONT_BOARD[y][x] = COVER_CHAR
 
 
+	dumpBoards = ->
+		dumpBoard UNDER_BOARD
+		dumpBoard FRONT_BOARD
+		console.log "=============="
+
 
 	# --------------- util methods ------------------
 
@@ -124,11 +129,6 @@ generateGame = (sizeX, sizeY, bomNum) ->
 		console.log "---------"
 
 
-	dumpBoards = ->
-		dumpBoard UNDER_BOARD
-		dumpBoard FRONT_BOARD
-		console.log "=============="
-
 
 	initBoards SIZE_X, SIZE_Y, BOMB_NUM
 	dumpBoard UNDER_BOARD
@@ -136,7 +136,9 @@ generateGame = (sizeX, sizeY, bomNum) ->
 	API = {}
 	API.open = open
 	API.putFlag = putFlag
-	API.dumpBoards = dumpBoards
+	API.dumpBoards = dumpBoards	
+	API.getUnderBoard = -> return $.extend true, [], UNDER_BOARD
+	API.getFrontBoard = -> return $.extend true, [], FRONT_BOARD
 	return API
 
 

@@ -1,5 +1,5 @@
 (function() {
-  var game, wait;
+  var copy, game;
 
   console.log("script.coffee");
 
@@ -9,17 +9,8 @@
 
   game.dumpBoards();
 
-  wait = function(time, callback) {
-    return setTimeout(callback, time);
-  };
+  copy = game.getUnderBoard();
 
-  wait(1000, function() {
-    game.putFlag(2, 2);
-    game.dumpBoards();
-    return wait(1000, function() {
-      game.putFlag(2, 2);
-      return game.dumpBoards();
-    });
-  });
+  console.log(copy);
 
 }).call(this);
