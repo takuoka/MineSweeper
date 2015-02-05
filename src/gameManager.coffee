@@ -59,6 +59,16 @@ initUnderBoard = (xSize, ySize, bomNum) ->
 				incrementSorroundingNumbers x, y
 
 
+open = (x, y) ->
+	value = UNDER_BOARD[y][x]
+	FRONT_BOARD[y][x] = value
+	# もし 0 なら 周りのマスも開ける
+	if value is 0
+		getSorroundingPlace x, y, (sx, sy)->
+			if FRONT_BOARD[sy][sx] is COVER_CHAR
+				open sx, sy
+	return value
+
 
 
 # --------------- util methods ------------------
@@ -104,6 +114,9 @@ dumpBoard = (board)->
 initBoards SIZE_X, SIZE_Y, 5
 dumpBoard UNDER_BOARD
 
+
+open 0,0
+dumpBoard FRONT_BOARD
 
 
 
