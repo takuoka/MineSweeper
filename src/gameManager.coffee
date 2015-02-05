@@ -2,7 +2,7 @@ console.log "gameManager.coffee"
 
 #盤面のサイズ
 SIZE_X = 5
-SIZE_Y = 6
+SIZE_Y = 4
 
 #地雷の数
 BOMB_NUM = 5
@@ -12,8 +12,9 @@ UNDER_BOARD = []#盤面の中身
 FRONT_BOARD = []#ユーザーに見えてる盤面
 
 #配列上での記号の定義
-BOMB_CHAR = 'B'
+BOMB_CHAR = 'B'#地雷
 FLAG_CHAR = 'F'#地雷があると確信したときに置くマーク
+COVER_CHAR = 'C'#開いていない状態
 
 
 initBoards =  (xSize, ySize, bomNum)->
@@ -26,7 +27,7 @@ initFrontBoard = (xSize, ySize) ->
 	for y in [0..ySize-1]
 		FRONT_BOARD.push []
 		for x in [0..xSize-1]
-			FRONT_BOARD[y].push ''
+			FRONT_BOARD[y].push COVER_CHAR
 
 
 initUnderBoard = (xSize, ySize, bomNum) ->
@@ -37,8 +38,9 @@ initUnderBoard = (xSize, ySize, bomNum) ->
 		else
 			addBomb()
 	incrementSorroundingNumbers = (x, y) ->
-		getSorroundingPlace UNDER_BOARD, x, y, (sx, sy)->
-			UNDER_BOARD[sy][sx] += 1
+		getSorroundingPlace x, y, (sx, sy)->
+			if UNDER_BOARD[sy][sx] isnt BOMB_CHAR
+				UNDER_BOARD[sy][sx] += 1
 
 	#２つの盤面の初期化
 	for y in [0..ySize-1]
@@ -59,13 +61,10 @@ initUnderBoard = (xSize, ySize, bomNum) ->
 
 
 
-
-
-
 # --------------- util methods ------------------
 
-rand = (max) -> Math.round Math.random() * max
-
+rand = (max) ->
+	return Math.round Math.random() * max
 getRandomPlace = (xSize, ySize)->
 	place = {}
 	place.x = rand xSize - 1
@@ -73,12 +72,11 @@ getRandomPlace = (xSize, ySize)->
 	return place
 
 
-getSorroundingPlace = (board, x, y, callback) ->
+getSorroundingPlace = (x, y, callback) ->
 	checkAndDo = (x, y) ->
-		if board[y] isnt undefined
-			if board[y][x] isnt undefined
-				if board[y][x] isnt BOMB_CHAR
-					callback(x, y)
+		if UNDER_BOARD[y] isnt undefined
+			if UNDER_BOARD[y][x] isnt undefined
+				callback(x, y)
 	checkAndDo x-1, y-1
 	checkAndDo x-1, y
 	checkAndDo x-1, y+1
@@ -91,21 +89,20 @@ getSorroundingPlace = (board, x, y, callback) ->
 
 
 dumpBoard = (board)->
+	console.log "---------"
 	ySize = board.length
 	xSize = board[0].length
-
 	for y in [0..ySize-1]
 		str = ""
 		for x in [0..xSize-1]
-			str += board[y][x] + "-"
+			str += board[y][x] + " "
 		console.log str
+	console.log "---------"
 
 
 
 initBoards SIZE_X, SIZE_Y, 5
 dumpBoard UNDER_BOARD
-dumpBoard FRONT_BOARD
-
 
 
 
