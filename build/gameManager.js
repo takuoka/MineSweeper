@@ -1,5 +1,5 @@
 (function() {
-  var BOARD, BOMB_CHAR, BOMB_NUM, FLAG_CHAR, FRONT_BOARD, SIZE_X, SIZE_Y, dumpBoard, initBoards;
+  var BOMB_CHAR, BOMB_NUM, FLAG_CHAR, FRONT_BOARD, SIZE_X, SIZE_Y, UNDER_BOARD, doSomethingAtSorroundingPlace, dumpBoard, initBoards;
 
   console.log("gameManager.coffee");
 
@@ -9,7 +9,7 @@
 
   BOMB_NUM = 5;
 
-  BOARD = [];
+  UNDER_BOARD = [];
 
   FRONT_BOARD = [];
 
@@ -17,67 +17,52 @@
 
   FLAG_CHAR = 'F';
 
-  initBoards = function(vSize, hSize, bomNum) {
-    var addBomb, getRandomPlace, h, i, incrementSorroundingNumbers, rand, v, _i, _j, _k, _l, _ref, _ref1, _ref2, _ref3, _results;
+  initBoards = function(ySize, xSize, bomNum) {
+    var addBomb, getRandomPlace, i, incrementSorroundingNumbers, rand, x, y, _i, _j, _k, _l, _ref, _ref1, _ref2, _ref3, _results;
+    console.log("initBoards");
     rand = function(max) {
       return Math.round(Math.random() * max);
     };
     getRandomPlace = function() {
       var place;
       place = {};
-      place.v = rand(vSize - 1);
-      place.h = rand(hSize - 1);
+      place.y = rand(ySize - 1);
+      place.x = rand(xSize - 1);
       return place;
     };
     addBomb = function() {
       var p;
       p = getRandomPlace();
-      if (BOARD[p.v][p.h] !== BOMB_CHAR) {
-        return BOARD[p.v][p.h] = BOMB_CHAR;
+      if (UNDER_BOARD[p.y][p.x] !== BOMB_CHAR) {
+        return UNDER_BOARD[p.y][p.x] = BOMB_CHAR;
       } else {
         return addBomb();
       }
     };
-    incrementSorroundingNumbers = function(v, h) {
-      var increment;
-      increment = function(v, h) {
-        if (BOARD[v] !== void 0) {
-          if (BOARD[v][h] !== void 0) {
-            if (BOARD[v][h] !== BOMB_CHAR) {
-              return BOARD[v][h] += 1;
-            }
-          }
-        }
-      };
-      increment(v - 1, h - 1);
-      increment(v - 1, h);
-      increment(v - 1, h + 1);
-      increment(v, h - 1);
-      increment(v, h + 1);
-      increment(v + 1, h - 1);
-      increment(v + 1, h);
-      return increment(v + 1, h + 1);
+    incrementSorroundingNumbers = function(y, x) {
+      return doSomethingAtSorroundingPlace(UNDER_BOARD, y, x, function(y, x) {
+        return UNDER_BOARD[y][x] += 1;
+      });
     };
-    console.log("initBOARD");
-    for (v = _i = 0, _ref = vSize - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; v = 0 <= _ref ? ++_i : --_i) {
-      BOARD.push([]);
+    for (y = _i = 0, _ref = ySize - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; y = 0 <= _ref ? ++_i : --_i) {
+      UNDER_BOARD.push([]);
       FRONT_BOARD.push([]);
-      for (h = _j = 0, _ref1 = hSize - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; h = 0 <= _ref1 ? ++_j : --_j) {
-        BOARD[v].push(0);
-        FRONT_BOARD[v].push('');
+      for (x = _j = 0, _ref1 = xSize - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; x = 0 <= _ref1 ? ++_j : --_j) {
+        UNDER_BOARD[y].push(0);
+        FRONT_BOARD[y].push('');
       }
     }
     for (i = _k = 0, _ref2 = bomNum - 1; 0 <= _ref2 ? _k <= _ref2 : _k >= _ref2; i = 0 <= _ref2 ? ++_k : --_k) {
       addBomb();
     }
     _results = [];
-    for (v = _l = 0, _ref3 = vSize - 1; 0 <= _ref3 ? _l <= _ref3 : _l >= _ref3; v = 0 <= _ref3 ? ++_l : --_l) {
+    for (y = _l = 0, _ref3 = ySize - 1; 0 <= _ref3 ? _l <= _ref3 : _l >= _ref3; y = 0 <= _ref3 ? ++_l : --_l) {
       _results.push((function() {
         var _m, _ref4, _results1;
         _results1 = [];
-        for (h = _m = 0, _ref4 = hSize - 1; 0 <= _ref4 ? _m <= _ref4 : _m >= _ref4; h = 0 <= _ref4 ? ++_m : --_m) {
-          if (BOARD[v][h] === BOMB_CHAR) {
-            _results1.push(incrementSorroundingNumbers(v, h));
+        for (x = _m = 0, _ref4 = xSize - 1; 0 <= _ref4 ? _m <= _ref4 : _m >= _ref4; x = 0 <= _ref4 ? ++_m : --_m) {
+          if (UNDER_BOARD[y][x] === BOMB_CHAR) {
+            _results1.push(incrementSorroundingNumbers(y, x));
           } else {
             _results1.push(void 0);
           }
@@ -88,15 +73,36 @@
     return _results;
   };
 
+  doSomethingAtSorroundingPlace = function(board, y, x, todo) {
+    var checkAndDo;
+    checkAndDo = function(y, x) {
+      if (board[y] !== void 0) {
+        if (board[y][x] !== void 0) {
+          if (board[y][x] !== BOMB_CHAR) {
+            return todo(y, x);
+          }
+        }
+      }
+    };
+    checkAndDo(y - 1, x - 1);
+    checkAndDo(y - 1, x);
+    checkAndDo(y - 1, x + 1);
+    checkAndDo(y, x - 1);
+    checkAndDo(y, x + 1);
+    checkAndDo(y + 1, x - 1);
+    checkAndDo(y + 1, x);
+    return checkAndDo(y + 1, x + 1);
+  };
+
   dumpBoard = function(board) {
-    var h, hSize, str, v, vSize, _i, _j, _ref, _ref1, _results;
-    vSize = board.length;
-    hSize = board[0].length;
+    var str, x, xSize, y, ySize, _i, _j, _ref, _ref1, _results;
+    ySize = board.length;
+    xSize = board[0].length;
     _results = [];
-    for (v = _i = 0, _ref = vSize - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; v = 0 <= _ref ? ++_i : --_i) {
+    for (y = _i = 0, _ref = ySize - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; y = 0 <= _ref ? ++_i : --_i) {
       str = "";
-      for (h = _j = 0, _ref1 = hSize - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; h = 0 <= _ref1 ? ++_j : --_j) {
-        str += board[v][h] + " ";
+      for (x = _j = 0, _ref1 = xSize - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; x = 0 <= _ref1 ? ++_j : --_j) {
+        str += board[y][x] + " ";
       }
       _results.push(console.log(str));
     }
@@ -105,7 +111,7 @@
 
   initBoards(SIZE_X, SIZE_Y, 5);
 
-  dumpBoard(BOARD);
+  dumpBoard(UNDER_BOARD);
 
   dumpBoard(FRONT_BOARD);
 
