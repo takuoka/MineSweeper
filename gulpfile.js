@@ -33,7 +33,7 @@ gulp.task("launch_browserSync", function() {
 
 
 gulp.task('stylus_task', function () {
-    gulp.src(src+'styl/*.styl')
+    gulp.src(src+'*.styl')
         .pipe(plumber())
         .pipe(stylus())
         .pipe(pleeease({
@@ -42,14 +42,14 @@ gulp.task('stylus_task', function () {
             },
             minifier: false
         }))
-        .pipe(gulp.dest(build+'css/'))
+        .pipe(gulp.dest(build))
 });
 
 gulp.task("coffee_task", function() {
-    gulp.src(src+"coffee/*.coffee")
+    gulp.src(src+"*.coffee")
         .pipe(plumber())
         .pipe(coffee({bare: false}))
-        .pipe(gulp.dest(build+'js/'))
+        .pipe(gulp.dest(build))
 });
 
 
@@ -68,15 +68,13 @@ gulp.task('jade_task', function () {
 
 
 gulp.task("css_task", function() {
-    gulp.src(build+"css/*.css")
+    gulp.src(build+"*.css")
         .pipe(browserSync.reload({stream:true}))
-        .pipe(gulp.dest(dropbox_path))
 });
 
 gulp.task("js_task", function() {
-    gulp.src(build+"js/*.js")
+    gulp.src(build+"*.js")
         .pipe(browserSync.reload({stream:true}))
-        .pipe(gulp.dest(dropbox_path))
 });
 
 
