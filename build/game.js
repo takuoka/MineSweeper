@@ -1,7 +1,5 @@
 (function() {
-  console.log("game.coffee");
-
-  window.generateGame = function(_parentId, _xSize, _ySize, _bombNum) {
+  window.generateGame = function(_parentId, _xSize, _ySize, _bombNum, onGameOver, onGameClear) {
     var CLASS_BOMB, CLASS_CLOSED, CLASS_FLAG, CLASS_NUMBER, CLASS_ZERO, ID_TABLE, bombNum, createTable, gameLogic, getAllCell, getClassName, initGame, onLeftClickOnCell, onRightClickOnCell, parentId, updateTable, xSize, ySize;
     if (_parentId === null) {
       alert("generateGame(_parentId) : ゲームを生成する要素のidを指定してください。");
@@ -26,6 +24,7 @@
     window.FLAG_CHAR = 'F';
     window.COVER_CHAR = 'C';
     window.CLEAR_SIGN = "CLEAR";
+    window.GAMEOVER_SIGN = "GAMEOVER";
     ID_TABLE = "game_table";
     CLASS_CLOSED = "closed";
     CLASS_NUMBER = "number";
@@ -34,7 +33,7 @@
     CLASS_BOMB = "bomb";
     gameLogic = null;
     initGame = function() {
-      gameLogic = generateGameLogic(xSize, ySize, bombNum);
+      gameLogic = generateGameLogic(xSize, ySize, bombNum, onGameOver, onGameClear);
       createTable();
       return updateTable();
     };
@@ -42,13 +41,7 @@
       var cell, result;
       cell = e.target;
       result = gameLogic.open(cell.x, cell.y);
-      updateTable();
-      if (result === BOMB_CHAR) {
-        window.onGameOver();
-      }
-      if (result === CLEAR_SIGN) {
-        return window.onCleared();
-      }
+      return updateTable();
     };
     onRightClickOnCell = function(e) {
       var cell;

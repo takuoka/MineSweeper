@@ -1,6 +1,6 @@
 (function() {
-  window.generateGameLogic = function(sizeX, sizeY, bomNum) {
-    var API, BOMB_NUM, FRONT_BOARD, SIZE_X, SIZE_Y, UNDER_BOARD, dumpBoard, dumpBoards, getRandomPlace, getSorroundingPlace, initBoards, initFrontBoard, initUnderBoard, isClearedGame, open, putFlag, rand;
+  window.generateGameLogic = function(sizeX, sizeY, bomNum, onGameOver, onGameClear) {
+    var API, BOMB_NUM, FRONT_BOARD, SIZE_X, SIZE_Y, UNDER_BOARD, dumpBoard, dumpBoards, getRandomPlace, getSorroundingPlace, initBoards, initFrontBoard, initUnderBoard, isClearedGame, open, openAll, putFlag, rand;
     SIZE_X = 5;
     SIZE_Y = 5;
     BOMB_NUM = 5;
@@ -80,20 +80,28 @@
       return _results;
     };
     open = function(x, y) {
-      var value;
-      value = UNDER_BOARD[y][x];
-      FRONT_BOARD[y][x] = value;
-      if (value === 0) {
+      var isCleared, isGameover, result;
+      result = UNDER_BOARD[y][x];
+      FRONT_BOARD[y][x] = result;
+      isCleared = isClearedGame();
+      isGameover = result === BOMB_CHAR;
+      if (isCleared || isGameover) {
+        openAll();
+      }
+      if (isCleared) {
+        onGameClear();
+        return;
+      }
+      if (isGameover) {
+        onGameOver();
+        return;
+      }
+      if (result === 0) {
         getSorroundingPlace(x, y, function(sx, sy) {
           if (FRONT_BOARD[sy][sx] === COVER_CHAR) {
             return open(sx, sy);
           }
         });
-      }
-      if (isClearedGame()) {
-        return CLEAR_SIGN;
-      } else {
-        return value;
       }
     };
     putFlag = function(x, y) {
@@ -124,6 +132,23 @@
       } else {
         return isCleared;
       }
+    };
+    openAll = function() {
+      var x, xSize, y, ySize, _i, _ref, _results;
+      ySize = FRONT_BOARD.length;
+      xSize = FRONT_BOARD[0].length;
+      _results = [];
+      for (y = _i = 0, _ref = ySize - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; y = 0 <= _ref ? ++_i : --_i) {
+        _results.push((function() {
+          var _j, _ref1, _results1;
+          _results1 = [];
+          for (x = _j = 0, _ref1 = xSize - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; x = 0 <= _ref1 ? ++_j : --_j) {
+            _results1.push(FRONT_BOARD[y][x] = UNDER_BOARD[y][x]);
+          }
+          return _results1;
+        })());
+      }
+      return _results;
     };
     dumpBoards = function() {
       dumpBoard(UNDER_BOARD);
