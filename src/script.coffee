@@ -60,16 +60,14 @@ updateTable = ->
 		div.className = getClassName board[y][x]
 
 
-
-
-onClickCell = (e) ->
-	div = e.target
-	console.log "clicked"
-	console.log div
-	console.log div.x
-	console.log div.y
-
-	gameManager.open div.x, div.y
+# クリックイベント
+onLeftClickOnCell = (e) ->
+	c = e.target
+	gameManager.open c.x, c.y
+	updateTable()
+onRightClickOnCell = (e) ->
+	c = e.target
+	gameManager.putFlag c.x, c.y
 	updateTable()
 
 
@@ -97,7 +95,8 @@ createTable = ->
 			# div.innerHTML = (y * x) + x
 			div.id = "y" + y + "_x" + x
 			div.className = CLASS_CLOSED
-			div.onclick = onClickCell
+			div.onclick = onLeftClickOnCell
+			div.oncontextmenu = onRightClickOnCell
 			div.x = x
 			div.y = y
 

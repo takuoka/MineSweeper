@@ -1,5 +1,5 @@
 (function() {
-  var CLASS_BOMB, CLASS_CLOSED, CLASS_FLAG, CLASS_NUMBER, CLASS_ZERO, ID_TABLE, bombNum, createTable, gameManager, generateGame, getAllCell, getClassName, onClickCell, parentId, updateTable, xSize, ySize;
+  var CLASS_BOMB, CLASS_CLOSED, CLASS_FLAG, CLASS_NUMBER, CLASS_ZERO, ID_TABLE, bombNum, createTable, gameManager, generateGame, getAllCell, getClassName, onLeftClickOnCell, onRightClickOnCell, parentId, updateTable, xSize, ySize;
 
   console.log("script.coffee");
 
@@ -53,14 +53,17 @@
     });
   };
 
-  onClickCell = function(e) {
-    var div;
-    div = e.target;
-    console.log("clicked");
-    console.log(div);
-    console.log(div.x);
-    console.log(div.y);
-    gameManager.open(div.x, div.y);
+  onLeftClickOnCell = function(e) {
+    var c;
+    c = e.target;
+    gameManager.open(c.x, c.y);
+    return updateTable();
+  };
+
+  onRightClickOnCell = function(e) {
+    var c;
+    c = e.target;
+    gameManager.putFlag(c.x, c.y);
     return updateTable();
   };
 
@@ -77,7 +80,8 @@
         div = document.createElement("div");
         div.id = "y" + y + "_x" + x;
         div.className = CLASS_CLOSED;
-        div.onclick = onClickCell;
+        div.onclick = onLeftClickOnCell;
+        div.oncontextmenu = onRightClickOnCell;
         div.x = x;
         div.y = y;
         cell.appendChild(div);
