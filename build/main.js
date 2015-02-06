@@ -2,7 +2,7 @@
   console.log("main.coffee");
 
   window.onload = function() {
-    return generateGame("game", 10, 10, 20);
+    return generateGame("game", 10, 10, 10);
   };
 
   window.onGameOver = function() {

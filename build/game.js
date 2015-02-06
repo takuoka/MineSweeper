@@ -1,6 +1,4 @@
 (function() {
-  console.log("game.coffee");
-
   window.generateGame = function(_parentId, _xSize, _ySize, _bombNum) {
     var CLASS_BOMB, CLASS_CLOSED, CLASS_FLAG, CLASS_NUMBER, CLASS_ZERO, ID_TABLE, bombNum, createTable, gameLogic, getAllCell, getClassName, initGame, onLeftClickOnCell, onRightClickOnCell, parentId, updateTable, xSize, ySize;
     if (_parentId === null) {

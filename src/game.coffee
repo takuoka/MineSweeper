@@ -1,4 +1,3 @@
-console.log "game.coffee"
 
 
 window.generateGame = (_parentId, _xSize, _ySize, _bombNum) ->

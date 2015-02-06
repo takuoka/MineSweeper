@@ -1,4 +1,5 @@
 
+
 window.generateGameLogic = (sizeX, sizeY, bomNum) ->
 
 	#盤面のサイズ, 地雷の数 (デフォルトは 5 )
@@ -58,6 +59,7 @@ window.generateGameLogic = (sizeX, sizeY, bomNum) ->
 					incrementSorroundingNumbers x, y
 
 
+		
 
 	open = (x, y) ->
 		value = UNDER_BOARD[y][x]
@@ -104,7 +106,6 @@ window.generateGameLogic = (sizeX, sizeY, bomNum) ->
 			return false
 		else
 			return isCleared
-
 
 
 	dumpBoards = ->
