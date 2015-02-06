@@ -10,7 +10,45 @@ table td div {
   height: 50px;
   margin: 0px;
   font-size: 20px;
-  background-color: #808080;
   text-align: center;
   vertical-align: middle;
+}
+table td div.closed {
+  background-color: #808080;
+}
+table td div.zero {
+  background-color: #fff;
+}
+table td div.flag {
+  background-color: #ffa500;
+}
+table td div.bomb {
+  background-color: #f00;
+}
+table td div.number {
+  background-color: #fff;
+}
+table td div.n1:after {
+  content: "1";
+}
+table td div.n2:after {
+  content: "2";
+}
+table td div.n3:after {
+  content: "3";
+}
+table td div.n4:after {
+  content: "4";
+}
+table td div.n5:after {
+  content: "5";
+}
+table td div.n6:after {
+  content: "6";
+}
+table td div.n7:after {
+  content: "7";
+}
+table td div.n8:after {
+  content: "8";
 }
