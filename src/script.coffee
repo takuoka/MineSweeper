@@ -50,8 +50,10 @@ generateGame = (_parentId, _xSize, _ySize, _bombNum)->
 	updateTable()
 
 
+
 # FRONT_BOARD から table の cell の クラス名に 反映
 updateTable = ->
+
 	board = gameManager.getFrontBoard()
 
 	getAllCell (div, x, y) ->
@@ -60,8 +62,15 @@ updateTable = ->
 
 
 
+onClickCell = (e) ->
+	div = e.target
+	console.log "clicked"
+	console.log div
+	console.log div.x
+	console.log div.y
 
-
+	gameManager.open div.x, div.y
+	updateTable()
 
 
 
@@ -88,6 +97,9 @@ createTable = ->
 			# div.innerHTML = (y * x) + x
 			div.id = "y" + y + "_x" + x
 			div.className = CLASS_CLOSED
+			div.onclick = onClickCell
+			div.x = x
+			div.y = y
 
 			cell.appendChild div
 			row.appendChild cell
