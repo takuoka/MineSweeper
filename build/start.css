@@ -3,6 +3,50 @@
   color: #fff;
 }
 #startScreen h1 {
-  font-size: 60px;
+  font-size: 80px;
   font-weight: bold;
+}
+.row {
+  margin-top: 30px;
+}
+.row p {
+  text-align: center;
+}
+.row p input,
+.row p span {
+  font-size: 40px;
+  max-width: 60px;
+  text-align: center;
+  margin: 5px;
+  background-color: rgba(0,0,0,0);
+  border-style: none;
+}
+.row p input {
+  color: #fff;
+  border-bottom: 3px #fff dashed;
+}
+.row p a {
+  transition-property: background-color, color;
+  transition-duration: 0.3s;
+  font-size: 40px;
+  font-weight: bold;
+  padding: 10px;
+  background-color: rgba(0,0,0,0);
+}
+.row p a:hover {
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+  background-color: rgba(0,0,0,0.1);
+}
+.row p a:active {
+  opacity: 0.7;
+  filter: alpha(opacity=70);
+  background-color: rgba(80,200,80,0.9);
+}
+input,
+input[type="text"],
+input[type="password"],
+textarea,
+select {
+  outline: none;
 }

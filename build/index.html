@@ -16,9 +16,20 @@
     <div id="startScreen" class="screen">
       <div class="wrapper">
         <h1>Mine Sweeper!</h1>
-        <div id="sizeSelecter"></div>
-        <div id="bombNumSelecter"></div>
-        <button id="startButton">start!</button>
+        <div id="sizeSelecter" class="row">
+          <p>
+            <input value="5" maxlength="2"><span>×</span>
+            <input value="5" maxlength="2">
+          </p>
+        </div>
+        <div id="bombNumSelecter" class="row">
+          <p><span>bomb</span><span>×</span>
+            <input value="5" maxlength="2">
+          </p>
+        </div>
+        <div id="startButtonArea" class="row">
+          <p><a id="startButton">start!</a></p>
+        </div>
       </div>
     </div>
   </body>

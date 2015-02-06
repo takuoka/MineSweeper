@@ -6,5 +6,40 @@
 	color white
 
 	h1
-		font-size 60px
+		font-size 80px
 		font-weight bold
+
+.row
+	margin-top 30px
+	p
+		text-align center
+		input, span
+			font-size 40px
+			max-width 60px
+			text-align center
+			margin 5px
+			background-color rgba(0,0,0, 0)//0.01)
+			border-style none
+		
+		input
+			color white
+			border-bottom:3px white dashed;
+
+		a
+			transition-property background-color, color
+			transition-duration 0.3s
+			font-size 40px
+			font-weight bold
+			padding 10px
+			background-color rgba(0,0,0, 0)
+			&:hover
+				opacity 0.9
+				background-color rgba(0,0,0, 0.1)
+			&:active
+				opacity 0.7
+				background-color rgba(80,200,80, 0.9)
+	
+
+//Google Chrome のinput要素 フォーカス時の線を消す
+input,input[type="text"],input[type="password"],textarea,select
+	outline none

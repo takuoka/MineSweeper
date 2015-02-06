@@ -20,11 +20,21 @@ html(lang="ja")
 			.wrapper
 				h1 Mine Sweeper!
 
-				#sizeSelecter
+				.row#sizeSelecter
+					p
+						input(value="5" maxlength="2")
+						span ×
+						input(value="5" maxlength="2")
 
-				#bombNumSelecter
+				.row#bombNumSelecter
+					p
+						span bomb
+						span ×
+						input(value="5" maxlength="2")
 
-				button#startButton start!
+				.row#startButtonArea
+					p
+						a#startButton start!
 
 
 		//- .screen#endScreec
