@@ -21,7 +21,8 @@ window.generateGame = (_parentId, _xSize, _ySize, _bombNum) ->
 	window.BOMB_CHAR  = 'B'#地雷
 	window.FLAG_CHAR  = 'F'#地雷があると確信したときに置くマーク
 	window.COVER_CHAR = 'C'#開いていない状態
-
+	# openしたときにクリアーだった時にかえってくる文字列
+	window.CLEAR_SIGN = "CLEAR"
 
 	#生成するtable要素のid
 	ID_TABLE = "game_table"
@@ -52,10 +53,13 @@ window.generateGame = (_parentId, _xSize, _ySize, _bombNum) ->
 	# クリックイベント
 	onLeftClickOnCell = (e) ->
 		c = e.target
-		content = gameLogic.open c.x, c.y
+		result = gameLogic.open c.x, c.y
 		updateTable()
-		if content is BOMB_CHAR
-			onGameOver()
+		if result is BOMB_CHAR
+			window.onGameOver()
+		if result is CLEAR_SIGN
+			window.onCleared()
+
 	onRightClickOnCell = (e) ->
 		c = e.target
 		gameLogic.putFlag c.x, c.y

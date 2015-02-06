@@ -1,6 +1,6 @@
 (function() {
   window.generateGameLogic = function(sizeX, sizeY, bomNum) {
-    var API, BOMB_NUM, FRONT_BOARD, SIZE_X, SIZE_Y, UNDER_BOARD, dumpBoard, dumpBoards, getRandomPlace, getSorroundingPlace, initBoards, initFrontBoard, initUnderBoard, open, putFlag, rand;
+    var API, BOMB_NUM, FRONT_BOARD, SIZE_X, SIZE_Y, UNDER_BOARD, dumpBoard, dumpBoards, getRandomPlace, getSorroundingPlace, initBoards, initFrontBoard, initUnderBoard, isClearedGame, open, putFlag, rand;
     SIZE_X = 5;
     SIZE_Y = 5;
     BOMB_NUM = 5;
@@ -79,6 +79,28 @@
       }
       return _results;
     };
+    isClearedGame = function() {
+      var isCleared, numOfCoverCell, x, xSize, y, ySize, _i, _j, _ref, _ref1;
+      console.log("isCleared-------------");
+      isCleared = true;
+      ySize = FRONT_BOARD.length;
+      xSize = FRONT_BOARD[0].length;
+      numOfCoverCell = 0;
+      for (y = _i = 0, _ref = ySize - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; y = 0 <= _ref ? ++_i : --_i) {
+        for (x = _j = 0, _ref1 = xSize - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; x = 0 <= _ref1 ? ++_j : --_j) {
+          if (FRONT_BOARD[y][x] === COVER_CHAR) {
+            numOfCoverCell += 1;
+            if (UNDER_BOARD[y][x] !== BOMB_CHAR) {
+              isCleared = false;
+            }
+          }
+        }
+      }
+      if (numOfCoverCell === 0) {
+        return false;
+      }
+      return isCleared;
+    };
     open = function(x, y) {
       var value;
       value = UNDER_BOARD[y][x];
@@ -89,6 +111,9 @@
             return open(sx, sy);
           }
         });
+      }
+      if (isClearedGame()) {
+        value = CLEAR_SIGN;
       }
       return value;
     };

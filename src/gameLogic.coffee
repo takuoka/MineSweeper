@@ -58,6 +58,30 @@ window.generateGameLogic = (sizeX, sizeY, bomNum) ->
 					incrementSorroundingNumbers x, y
 
 
+	# クリアしたかどうかチェック
+	isClearedGame = ->
+		console.log "isCleared-------------"
+		isCleared = true
+
+		ySize = FRONT_BOARD.length
+		xSize = FRONT_BOARD[0].length
+
+		numOfCoverCell = 0
+
+		for y in [0..ySize-1]
+			for x in [0..xSize-1]
+				if FRONT_BOARD[y][x] is COVER_CHAR
+					numOfCoverCell += 1
+					if UNDER_BOARD[y][x] isnt BOMB_CHAR
+						isCleared = false
+
+		if numOfCoverCell is 0
+			return false
+
+		return isCleared
+
+
+
 	open = (x, y) ->
 		value = UNDER_BOARD[y][x]
 		FRONT_BOARD[y][x] = value
@@ -66,6 +90,11 @@ window.generateGameLogic = (sizeX, sizeY, bomNum) ->
 			getSorroundingPlace x, y, (sx, sy)->
 				if FRONT_BOARD[sy][sx] is COVER_CHAR
 					open sx, sy
+
+		#クリアしてたら CLEAR_SIGN をかえす
+		if isClearedGame()
+			value = CLEAR_SIGN
+
 		return value
 
 
@@ -106,6 +135,7 @@ window.generateGameLogic = (sizeX, sizeY, bomNum) ->
 		checkAndCallBack x+1, y-1
 		checkAndCallBack x+1, y
 		checkAndCallBack x+1, y+1
+
 
 
 

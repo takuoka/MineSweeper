@@ -25,6 +25,7 @@
     window.BOMB_CHAR = 'B';
     window.FLAG_CHAR = 'F';
     window.COVER_CHAR = 'C';
+    window.CLEAR_SIGN = "CLEAR";
     ID_TABLE = "game_table";
     CLASS_CLOSED = "closed";
     CLASS_NUMBER = "number";
@@ -38,12 +39,15 @@
       return updateTable();
     };
     onLeftClickOnCell = function(e) {
-      var c, content;
+      var c, result;
       c = e.target;
-      content = gameLogic.open(c.x, c.y);
+      result = gameLogic.open(c.x, c.y);
       updateTable();
-      if (content === BOMB_CHAR) {
-        return onGameOver();
+      if (result === BOMB_CHAR) {
+        window.onGameOver();
+      }
+      if (result === CLEAR_SIGN) {
+        return window.onCleared();
       }
     };
     onRightClickOnCell = function(e) {
