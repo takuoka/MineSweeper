@@ -39,9 +39,9 @@
       return updateTable();
     };
     onLeftClickOnCell = function(e) {
-      var c, result;
-      c = e.target;
-      result = gameLogic.open(c.x, c.y);
+      var cell, result;
+      cell = e.target;
+      result = gameLogic.open(cell.x, cell.y);
       updateTable();
       if (result === BOMB_CHAR) {
         window.onGameOver();
@@ -51,9 +51,9 @@
       }
     };
     onRightClickOnCell = function(e) {
-      var c;
-      c = e.target;
-      gameLogic.putFlag(c.x, c.y);
+      var cell;
+      cell = e.target;
+      gameLogic.putFlag(cell.x, cell.y);
       updateTable();
       e.preventDefault();
       return e.stopPropagation();

@@ -42,28 +42,29 @@ window.generateGame = (_parentId, _xSize, _ySize, _bombNum) ->
 
 
 	initGame = ->
-
 		gameLogic = generateGameLogic xSize, ySize, bombNum
-
 		createTable()
-
 		updateTable()
-
 
 	# クリックイベント
 	onLeftClickOnCell = (e) ->
-		c = e.target
-		result = gameLogic.open c.x, c.y
+		cell = e.target
+		result = gameLogic.open cell.x, cell.y
 		updateTable()
+
 		if result is BOMB_CHAR
 			window.onGameOver()
+
 		if result is CLEAR_SIGN
 			window.onCleared()
 
+
+
 	onRightClickOnCell = (e) ->
-		c = e.target
-		gameLogic.putFlag c.x, c.y
+		cell = e.target
+		gameLogic.putFlag cell.x, cell.y
 		updateTable()
+
 		#デフォルトのイベントキャンセル
 		e.preventDefault()
 		e.stopPropagation()
