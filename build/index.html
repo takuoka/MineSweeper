@@ -2,7 +2,6 @@
 <html lang="ja">
   <head>
     <title></title>
-    <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="start.css">
     <link rel="stylesheet" href="game.css">
@@ -18,17 +17,17 @@
         <h1>Mine Sweeper!</h1>
         <div id="sizeSelecter" class="row">
           <p>
-            <input value="5" maxlength="2"><span>×</span>
-            <input value="5" maxlength="2">
+            <input id="xSize" value="5" maxlength="2"><span>×</span>
+            <input id="ySize" value="5" maxlength="2">
           </p>
         </div>
         <div id="bombNumSelecter" class="row">
           <p><span>bomb</span><span>×</span>
-            <input value="5" maxlength="2">
+            <input id="bombNum" value="5" maxlength="2">
           </p>
         </div>
         <div id="startButtonArea" class="row">
-          <p><a id="startButton">start!</a></p>
+          <p><a onclick="onClickStart();" id="startButton">start!</a></p>
         </div>
       </div>
     </div>

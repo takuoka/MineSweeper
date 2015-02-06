@@ -3,7 +3,7 @@ html(lang="ja")
 
 	head
 		title= MineSweeper
-		link(rel='stylesheet', href='reset.css')
+		//- link(rel='stylesheet', href='reset.css')
 		link(rel='stylesheet', href='main.css')
 		link(rel='stylesheet', href='start.css')
 		link(rel='stylesheet', href='game.css')
@@ -22,19 +22,19 @@ html(lang="ja")
 
 				.row#sizeSelecter
 					p
-						input(value="5" maxlength="2")
+						input#xSize(value="5" maxlength="2")
 						span ×
-						input(value="5" maxlength="2")
+						input#ySize(value="5" maxlength="2")
 
 				.row#bombNumSelecter
 					p
 						span bomb
 						span ×
-						input(value="5" maxlength="2")
+						input#bombNum(value="5" maxlength="2")
 
 				.row#startButtonArea
 					p
-						a#startButton start!
+						a(onclick="onClickStart();")#startButton start!
 
 
 		//- .screen#endScreec
