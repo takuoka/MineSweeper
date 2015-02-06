@@ -1,7 +1,7 @@
 console.log "main.coffee"
 
 window.onload = ->
-	generateGame "game", 3, 3, 1, onGameOver, onGameClear
+	generateGame "game", 7, 6, 3, onGameOver, onGameClear
 
 onGameOver = ->
 	alert "gameOver!!"
