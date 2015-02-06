@@ -1,49 +1,64 @@
 
+cellSize = 30px
+fontSize = 10px
+
 table
-	border-width 10px
+	border-width 6px
 	border-style solid
-	
-	td
-		div
-			display table-cell
-			border-width 3px
-			border-style outset
-			width 50px
-			height 50px
-			margin 0px
-			font-size 20px
-			text-align: center
-			vertical-align middle
+	border-spacing 0px
+	border-color #999
+	tr
+		td
+			div
+				display table-cell
+				width cellSize
+				height cellSize
+				margin 0px
 
-			&.closed
-				background-color gray
+				font-size fontSize
+				text-align: center
+				vertical-align middle
 
-			&.zero
-				background-color white
+				border-width 1px
+				border-style dashed
+				border-color #ddd
 
-			&.flag
-				background-color orange
 
-			&.bomb
-				background-color red
-				
-			&.number
-				background-color white
-			&.n1:after
-				content "1"
-			&.n2:after
-				content "2"
-			&.n3:after
-				content "3"
-			&.n4:after
-				content "4"
-			&.n5:after
-				content "5"
-			&.n6:after
-				content "6"
-			&.n7:after
-				content "7"
-			&.n8:after
-				content "8"
-				
+				&.closed, &.flag
+					border-style outset
+					border-color #aaa
+					background-color #ccc
+					&:hover
+						opacity 0.9
+					&:active
+						opacity 0.7
+
+				&.flag
+					background-color orange
+
+					
+				&.zero
+					background-color white
+				&.number
+					background-color white
+				&.n1:after
+					content "1"
+				&.n2:after
+					content "2"
+				&.n3:after
+					content "3"
+				&.n4:after
+					content "4"
+				&.n5:after
+					content "5"
+				&.n6:after
+					content "6"
+				&.n7:after
+					content "7"
+				&.n8:after
+					content "8"
+					
+
+				&.bomb
+					background-color red
 
