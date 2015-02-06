@@ -1,5 +1,5 @@
 
-generateGame = (sizeX, sizeY, bomNum) ->
+generateGameManager = (sizeX, sizeY, bomNum) ->
 
 	#盤面のサイズ, 地雷の数 (デフォルトは 5 )
 	SIZE_X   = 5
@@ -15,11 +15,6 @@ generateGame = (sizeX, sizeY, bomNum) ->
 	#盤面
 	UNDER_BOARD = []#盤面の中身
 	FRONT_BOARD = []#ユーザーに見えてる盤面
-
-	#配列上での記号の定義
-	BOMB_CHAR  = 'B'#地雷
-	FLAG_CHAR  = 'F'#地雷があると確信したときに置くマーク
-	COVER_CHAR = 'C'#開いていない状態
 
 
 	initBoards =  (xSize, ySize, bomNum)->
@@ -140,7 +135,7 @@ generateGame = (sizeX, sizeY, bomNum) ->
 
 
 
-window.generateGame = generateGame
+window.generateGameManager = generateGameManager
 
 
 
