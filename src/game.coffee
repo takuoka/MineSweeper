@@ -60,6 +60,9 @@ window.generateGame = (_parentId, _xSize, _ySize, _bombNum) ->
 		c = e.target
 		gameLogic.putFlag c.x, c.y
 		updateTable()
+		#デフォルトのイベントキャンセル
+		e.preventDefault()
+		e.stopPropagation()
 
 
 	# ------------- main function ---------------

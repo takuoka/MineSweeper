@@ -50,7 +50,9 @@
       var c;
       c = e.target;
       gameLogic.putFlag(c.x, c.y);
-      return updateTable();
+      updateTable();
+      e.preventDefault();
+      return e.stopPropagation();
     };
     updateTable = function() {
       var board;
