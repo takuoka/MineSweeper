@@ -5,6 +5,7 @@
 #startScreen h1 {
   font-size: 80px;
   font-weight: bold;
+  text-align: center;
 }
 .row {
   margin-top: 30px;
@@ -28,7 +29,7 @@
 .row p a {
   transition-property: background-color, color;
   transition-duration: 0.3s;
-  font-size: 40px;
+  font-size: 50px;
   font-weight: bold;
   padding: 10px;
   background-color: rgba(0,0,0,0);
