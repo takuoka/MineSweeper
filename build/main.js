@@ -1,15 +1,17 @@
 (function() {
+  var onGameClear, onGameOver;
+
   console.log("main.coffee");
 
   window.onload = function() {
-    return generateGame("game", 10, 10, 10);
+    return generateGame("game", 3, 3, 1, onGameOver, onGameClear);
   };
 
-  window.onGameOver = function() {
+  onGameOver = function() {
     return alert("gameOver!!");
   };
 
-  window.onCleared = function() {
+  onGameClear = function() {
     return alert("cleared!!");
   };
 

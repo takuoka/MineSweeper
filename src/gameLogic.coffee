@@ -1,6 +1,6 @@
 
 
-window.generateGameLogic = (sizeX, sizeY, bomNum) ->
+window.generateGameLogic = (sizeX, sizeY, bomNum, onGameOver, onGameClear) ->
 
 	#盤面のサイズ, 地雷の数 (デフォルトは 5 )
 	SIZE_X   = 5
@@ -59,22 +59,35 @@ window.generateGameLogic = (sizeX, sizeY, bomNum) ->
 					incrementSorroundingNumbers x, y
 
 
-		
 
 	open = (x, y) ->
-		value = UNDER_BOARD[y][x]
-		FRONT_BOARD[y][x] = value
+
+		result = UNDER_BOARD[y][x]
+		FRONT_BOARD[y][x] = result
+
+		#クリアとゲームオーバーの判定
+		isCleared = isClearedGame()
+		isGameover = result is BOMB_CHAR
+
+		#クリアかゲームオーバーだった場合は全てを開ける。	
+		if isCleared or isGameover
+			openAll()
+
+		#クリアかゲームオーバーだったらサインを返す
+		if isCleared
+			onGameClear()
+			return
+		if isGameover
+			onGameOver()
+			return
+
 		# もし 0 なら 周りのマスも開ける
-		if value is 0
+		if result is 0
 			getSorroundingPlace x, y, (sx, sy)->
 				if FRONT_BOARD[sy][sx] is COVER_CHAR
 					open sx, sy
 
-		#クリアしてたら CLEAR_SIGN をかえす
-		if isClearedGame()
-			return CLEAR_SIGN
-		else
-			return value
+		return
 
 
 	putFlag = (x, y) ->
@@ -106,6 +119,15 @@ window.generateGameLogic = (sizeX, sizeY, bomNum) ->
 			return false
 		else
 			return isCleared
+
+
+	#クリアした時 と ゲームオーバーした時に全部開く	
+	openAll = ->
+		ySize = FRONT_BOARD.length
+		xSize = FRONT_BOARD[0].length
+		for y in [0..ySize-1]
+			for x in [0..xSize-1]
+				FRONT_BOARD[y][x] = UNDER_BOARD[y][x]
 
 
 	dumpBoards = ->

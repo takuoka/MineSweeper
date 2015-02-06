@@ -1,10 +1,11 @@
 
 
-window.generateGame = (_parentId, _xSize, _ySize, _bombNum) ->
+window.generateGame = (_parentId, _xSize, _ySize, _bombNum, onGameOver, onGameClear) ->
 
 	if _parentId is null
 		alert "generateGame(_parentId) : ゲームを生成する要素のidを指定してください。"
 	
+
 	parentId = null
 	xSize = 5
 	ySize = 5
@@ -22,6 +23,7 @@ window.generateGame = (_parentId, _xSize, _ySize, _bombNum) ->
 	window.COVER_CHAR = 'C'#開いていない状態
 	# openしたときにクリアーだった時にかえってくる文字列
 	window.CLEAR_SIGN = "CLEAR"
+	window.GAMEOVER_SIGN = "GAMEOVER"
 
 	#生成するtable要素のid
 	ID_TABLE = "game_table"
@@ -36,54 +38,43 @@ window.generateGame = (_parentId, _xSize, _ySize, _bombNum) ->
 	CLASS_BOMB   = "bomb"
 
 
-
 	gameLogic = null
 
 
+
+	#この関数の最後に呼ぶ
 	initGame = ->
-		gameLogic = generateGameLogic xSize, ySize, bombNum
+		gameLogic = generateGameLogic xSize, ySize, bombNum, onGameOver, onGameClear
 		createTable()
 		updateTable()
 
+
 	# クリックイベント
-	onLeftClickOnCell = (e) ->
+	onLeftClickOnCell  = (e) ->
 		cell = e.target
 		result = gameLogic.open cell.x, cell.y
 		updateTable()
-
-		if result is BOMB_CHAR
-			window.onGameOver()
-
-		if result is CLEAR_SIGN
-			window.onCleared()
-
-
-
 	onRightClickOnCell = (e) ->
 		cell = e.target
 		gameLogic.putFlag cell.x, cell.y
 		updateTable()
-
 		#デフォルトのイベントキャンセル
 		e.preventDefault()
 		e.stopPropagation()
 
 
-	# ------------- main function ---------------
-
-
-	# FRONT_BOARD から table の cell の クラス名に 反映
-	updateTable = ->
-
-		board = gameLogic.getFrontBoard()
-
-		getAllCell (div, x, y) ->
-			div.className = getClassName board[y][x]
-
 
 
 
 	# ------------- util function ---------------
+
+	# FRONT_BOARD から table の cell の クラス名に 反映
+	updateTable = ->
+		board = gameLogic.getFrontBoard()
+		getAllCell (div, x, y) ->
+			div.className = getClassName board[y][x]
+
+
 
 	createTable = ->
 
@@ -121,6 +112,8 @@ window.generateGame = (_parentId, _xSize, _ySize, _bombNum) ->
 		parent.appendChild table
 
 
+
+
 	getAllCell = (callback) ->
 		table   = document.getElementById ID_TABLE
 		tbody   = table.children[0]
@@ -133,6 +126,7 @@ window.generateGame = (_parentId, _xSize, _ySize, _bombNum) ->
 				cell = row.children[x]
 				div  = cell.children[0]
 				callback div, x, y
+
 
 
 	getClassName = (char)->
