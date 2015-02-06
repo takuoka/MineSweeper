@@ -1,0 +1,8 @@
+#startScreen {
+  background-color: #6db2ce;
+  color: #fff;
+}
+#startScreen h1 {
+  font-size: 60px;
+  font-weight: bold;
+}

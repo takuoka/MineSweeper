@@ -3,10 +3,33 @@ html(lang="ja")
 
 	head
 		title= MineSweeper
+		link(rel='stylesheet', href='reset.css')
+		link(rel='stylesheet', href='main.css')
+		link(rel='stylesheet', href='start.css')
 		link(rel='stylesheet', href='game.css')
 
 	body
-		#game
+
+		.screen#gameScreen
+			.wrapper
+				#game
+
+
+
+		.screen#startScreen
+			.wrapper
+				h1 Mine Sweeper!
+
+				#sizeSelecter
+
+				#bombNumSelecter
+
+				button#startButton start!
+
+
+		//- .screen#endScreec
+		//- 	.wrapper
+		//- 		p GameOver!
 
 	script(src="lib/jquery-2.1.3.min.js")
 	script(src="gameLogic.js")
