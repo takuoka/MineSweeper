@@ -1,3 +1,16 @@
-h1 {
-  border: 1px #f00;
+table {
+  border-width: 10px;
+  border-style: solid;
+}
+table td div {
+  display: table-cell;
+  border-width: 3px;
+  border-style: outset;
+  width: 50px;
+  height: 50px;
+  margin: 0px;
+  font-size: 20px;
+  background-color: #808080;
+  text-align: center;
+  vertical-align: middle;
 }
