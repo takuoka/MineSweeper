@@ -1,5 +1,5 @@
 
-generateGameManager = (sizeX, sizeY, bomNum) ->
+window.generateGameLogic = (sizeX, sizeY, bomNum) ->
 
 	#盤面のサイズ, 地雷の数 (デフォルトは 5 )
 	SIZE_X   = 5
@@ -132,15 +132,4 @@ generateGameManager = (sizeX, sizeY, bomNum) ->
 	API.getUnderBoard = -> return $.extend true, [], UNDER_BOARD
 	API.getFrontBoard = -> return $.extend true, [], FRONT_BOARD
 	return API
-
-
-
-window.generateGameManager = generateGameManager
-
-
-
-
-
-
-
 

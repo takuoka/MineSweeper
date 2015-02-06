@@ -1,7 +1,5 @@
 (function() {
-  var generateGameManager;
-
-  generateGameManager = function(sizeX, sizeY, bomNum) {
+  window.generateGameLogic = function(sizeX, sizeY, bomNum) {
     var API, BOMB_NUM, FRONT_BOARD, SIZE_X, SIZE_Y, UNDER_BOARD, dumpBoard, dumpBoards, getRandomPlace, getSorroundingPlace, initBoards, initFrontBoard, initUnderBoard, open, putFlag, rand;
     SIZE_X = 5;
     SIZE_Y = 5;
@@ -161,7 +159,5 @@
     };
     return API;
   };
-
-  window.generateGameManager = generateGameManager;
 
 }).call(this);
