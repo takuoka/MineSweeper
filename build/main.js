@@ -118,15 +118,6 @@
 
   tickInterval = null;
 
-  stopTimer = function() {
-    return clearInterval(tickInterval);
-  };
-
-  resetTimer = function() {
-    stopTimer();
-    return timerElm.innerHTML = "00:00";
-  };
-
   startTimer = function() {
     var startDate, tick;
     startDate = new Date();
@@ -137,6 +128,15 @@
       return timerElm.innerHTML = timerString;
     };
     return tickInterval = setInterval(tick, 1000);
+  };
+
+  stopTimer = function() {
+    return clearInterval(tickInterval);
+  };
+
+  resetTimer = function() {
+    stopTimer();
+    return timerElm.innerHTML = "00:00";
   };
 
   wait = function(time, callback) {
