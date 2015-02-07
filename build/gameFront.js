@@ -1,5 +1,5 @@
 (function() {
-  window.generateGame = function(_parentId, _xSize, _ySize, _bombNum, onGameOver, onGameClear) {
+  window.generateGame = function(_parentId, _xSize, _ySize, _bombNum, onGameOver, onGameClear, onClickCell) {
     var CLASS_BOMB, CLASS_CLOSED, CLASS_FLAG, CLASS_NUMBER, CLASS_ZERO, ID_TABLE, bombNum, createTable, gameLogic, getAllCell, getClassName, initGame, onLeftClickOnCell, onRightClickOnCell, parentId, updateTable, xSize, ySize;
     if (_parentId === null) {
       alert("generateGame(_parentId) : ゲームを生成する要素のidを指定してください。");
@@ -39,6 +39,9 @@
     };
     onLeftClickOnCell = function(e) {
       var cell, result;
+      if (onClickCell) {
+        onClickCell(e);
+      }
       cell = e.target;
       result = gameLogic.open(cell.x, cell.y);
       return updateTable();

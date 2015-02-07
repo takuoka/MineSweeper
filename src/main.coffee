@@ -4,35 +4,94 @@ console.log "main.coffee"
 # -------------- events -----------------
 
 window.onload = ->
-	onClickStart()
+	onClickStartButton()
+	# wait 600, ->
+	# 	showGameOverScreen()
 
-window.onClickStart = ->
+window.onClickStartButton = ->
 	gameStart()
 
 onGameOver = ->
-	alert "gameOver!!"
+	# alert "gameOver!!"
 	stopTimer()
+	showGameOverScreen()
 
 onGameClear = ->
 	alert "cleared!!"
+
+window.onClickRetryButton = ->
+	startScreen = document.getElementById "startScreen"
+	fadeIn startScreen, ->
+		hideGameOverScreen()
+
+
+clickedX = null
+clickedY = null
+onClickCell = (e) ->
+	clickedX = e.pageX
+	clickedY = e.pageY
+
+
 
 
 # -------------- main function -----------------
 
 
 gameStart = ->
+
+	resetTimer()
+	deleteGameTable()
+
 	startScreen = document.getElementById "startScreen"
 	xSize       = document.getElementById("xSize").value
 	ySize       = document.getElementById("ySize").value
 	bombNum     = document.getElementById("bombNum").value
 	bombInfoNum = document.getElementById "bombInfoNum"
 
-	generateGame "game", xSize, ySize, bombNum, onGameOver, onGameClear
+	generateGame "game", xSize, ySize, bombNum, onGameOver, onGameClear, onClickCell
 	bombInfoNum.innerHTML = bombNum
 
 	fadeOut startScreen
 
 	startTimer()
+
+deleteGameTable = ->
+
+	game = document.getElementById "game"
+
+	if game.childNodes.length >= 1
+		# for (var i =aNode.childNodes.length-1; i>=0; i--)
+		for i in [game.childNodes.length-1..0]
+			game.removeChild game.childNodes[i]
+
+
+
+# ---------------- game end screen -------------------------
+
+showGameOverScreen = ->
+	spreadWrapper = document.getElementById "spreadWrapper"
+	gameEndArea = document.getElementById "gameEndArea"
+	spreadBg = document.getElementById "spreadBg"
+	gameEndArea.style.display = "block"
+	spreadWrapper.style.display = "block"
+
+	spreadBg.style.top = clickedY + "px"
+	spreadBg.style.left = clickedX + "px"
+
+	wait 100, ->
+		spreadBg.className = "spread"
+		wait 500, ->
+			addClass gameEndArea, "show"
+
+hideGameOverScreen = ->
+	spreadWrapper = document.getElementById "spreadWrapper"
+	spreadBg = document.getElementById "spreadBg"
+	gameEndArea = document.getElementById "gameEndArea"
+	removeClass spreadBg, "spread"
+	removeClass gameEndArea, "show"
+	wait 500, ->
+		spreadWrapper.style.display = "none"
+		gameEndArea.style.display = "none"
 
 
 
@@ -42,6 +101,11 @@ tickInterval = null;
 
 stopTimer = ->
 	clearInterval tickInterval
+
+resetTimer = ->
+	stopTimer()
+	timerElm = document.getElementById "timer"
+	timerElm.innerHTML = "00:00"
 
 startTimer = ->
 	timerElm = document.getElementById "timer"
@@ -81,6 +145,23 @@ zeroPadding_2 = (num) -> return ("0" + num).slice(-2)
 fadeOut = (elm)->
 	elm.style.opacity = 0
 	wait 500, -> elm.style.display = "none"
+
+fadeIn = (elm, callback)->
+	elm.style.display = "block"
+	wait 100, ->
+		elm.style.opacity = 1
+		wait 500, ->
+			callback() if callback
+
+addClass = (elm, className) -> elm.className = elm.className + ' ' + className 
+removeClass = (elm, removeClassName) ->
+    classString = elm.className
+    nameIndex = classString.indexOf removeClassName
+
+    if nameIndex isnt -1
+    	classString = classString.substr(0, nameIndex) + classString.substr(nameIndex+removeClassName.length)
+
+    elm.className = classString
 
 wait = (time, callback)-> setTimeout callback, time
 

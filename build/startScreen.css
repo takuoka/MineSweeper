@@ -1,4 +1,5 @@
 #startScreen {
+  z-index: 500;
   background-color: #6db2ce;
   color: #fff;
   min-height: 600px;

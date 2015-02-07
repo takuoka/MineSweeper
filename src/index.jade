@@ -5,8 +5,9 @@ html(lang="ja")
 		title= MineSweeper
 		//- link(rel='stylesheet', href='reset.css')
 		link(rel='stylesheet', href='main.css')
-		link(rel='stylesheet', href='start.css')
-		link(rel='stylesheet', href='game.css')
+		link(rel='stylesheet', href='startScreen.css')
+		link(rel='stylesheet', href='gameScreen.css')
+		link(rel='stylesheet', href='endScreen.css')
 
 	body
 
@@ -23,6 +24,17 @@ html(lang="ja")
 					p#giveupText give up
 					p (・ェ・`=)
 
+
+		//- ゲームオーバーとクリア時に広がる背景
+		#spreadWrapper
+			#spreadBg
+
+
+		.screen#gameEndArea
+			.wrapper
+				h1 GameOver!
+				p
+					a(onclick="onClickRetryButton();") retry
 
 
 
@@ -44,7 +56,7 @@ html(lang="ja")
 
 				.row#startButtonArea
 					p
-						a(onclick="onClickStart();")#startButton start!
+						a(onclick="onClickStartButton();")#startButton start!
 
 
 		//- .screen#endScreec

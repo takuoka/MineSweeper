@@ -3,8 +3,9 @@
   <head>
     <title></title>
     <link rel="stylesheet" href="main.css">
-    <link rel="stylesheet" href="start.css">
-    <link rel="stylesheet" href="game.css">
+    <link rel="stylesheet" href="startScreen.css">
+    <link rel="stylesheet" href="gameScreen.css">
+    <link rel="stylesheet" href="endScreen.css">
   </head>
   <body>
     <div id="gameScreen" class="screen">
@@ -19,6 +20,15 @@
           <p id="giveupText">give up</p>
           <p>(・ェ・`=)</p>
         </div>
+      </div>
+    </div>
+    <div id="spreadWrapper">
+      <div id="spreadBg"></div>
+    </div>
+    <div id="gameEndArea" class="screen">
+      <div class="wrapper">
+        <h1>GameOver!</h1>
+        <p><a onclick="onClickRetryButton();">retry</a></p>
       </div>
     </div>
     <div id="startScreen" class="screen">
@@ -36,7 +46,7 @@
           </p>
         </div>
         <div id="startButtonArea" class="row">
-          <p><a onclick="onClickStart();" id="startButton">start!</a></p>
+          <p><a onclick="onClickStartButton();" id="startButton">start!</a></p>
         </div>
       </div>
     </div>
