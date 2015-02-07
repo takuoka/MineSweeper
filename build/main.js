@@ -1,14 +1,15 @@
 (function() {
-  var addClass, bombInfoNum, clickedX, clickedY, deleteGame, fadeIn, fadeOut, gameEndArea, gameStart, getElapsedTime, getElements, hideEndScreen, onClickCell, onGameClear, onGameOver, removeClass, resetTimer, showEndScreen, showGameClearScreen, showGameOverScreen, spreadBg, spreadWrapper, startScreen, startTimer, stopTimer, tickInterval, timerElm, wait, zeroPadding_2;
-
-  console.log("main.coffee");
+  var bombInfoNum, clickedX, clickedY, deleteGame, fadeIn, fadeOut, gameEndArea, gameStart, getElapsedTime, getElements, hideEndScreen, onClickCell, onGameClear, onGameOver, resetTimer, showEndScreen, showGameClearScreen, showGameOverScreen, spreadBg, spreadWrapper, startScreen, startTimer, stopTimer, tickInterval, timerElm, wait, zeroPadding_2;
 
   window.onload = function() {
+    startValidation();
     return getElements();
   };
 
   window.onClickStartButton = function() {
-    return gameStart();
+    if (window.isValidConfig) {
+      return gameStart();
+    }
   };
 
   window.onClickRetryButton = function() {
@@ -143,11 +144,11 @@
     return setTimeout(callback, time);
   };
 
-  addClass = function(elm, className) {
+  window.addClass = function(elm, className) {
     return elm.className = elm.className + ' ' + className;
   };
 
-  removeClass = function(elm, removeClassName) {
+  window.removeClass = function(elm, removeClassName) {
     var classString, nameIndex;
     classString = elm.className;
     nameIndex = classString.indexOf(removeClassName);

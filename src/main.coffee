@@ -1,16 +1,17 @@
-console.log "main.coffee"
 
 
 # -------------- events -----------------
 
 window.onload = ->
+	startValidation()
 	getElements()
 	# onClickStartButton()
 	# wait 600, ->
 	# 	showGameClearScreen()
 
 window.onClickStartButton = ->
-	gameStart()
+	if window.isValidConfig
+		gameStart()
 
 window.onClickRetryButton = ->
 	startScreen = document.getElementById "startScreen"
@@ -131,9 +132,9 @@ resetTimer = ->
 wait = (time, callback)-> setTimeout callback, time
 
 
-addClass = (elm, className) -> elm.className = elm.className + ' ' + className 
+window.addClass = (elm, className) -> elm.className = elm.className + ' ' + className 
 
-removeClass = (elm, removeClassName) ->
+window.removeClass = (elm, removeClassName) ->
     classString = elm.className
     nameIndex = classString.indexOf removeClassName
 

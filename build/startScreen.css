@@ -22,7 +22,7 @@ h1 {
 .row p input,
 .row p span {
   font-size: 40px;
-  max-width: 60px;
+  width: 60px;
   text-align: center;
   margin: 5px;
   background-color: rgba(0,0,0,0);
@@ -32,7 +32,10 @@ h1 {
   color: #fff;
   border-bottom: 3px #fff dashed;
 }
-.row p a {
+.row p #bombNum {
+  width: 80px;
+}
+.row p a#startButton {
   transition-property: background-color, color;
   transition-duration: 0.3s;
   font-size: 50px;
@@ -40,15 +43,18 @@ h1 {
   padding: 10px;
   background-color: rgba(0,0,0,0);
 }
-.row p a:hover {
+.row p a#startButton:hover {
   opacity: 0.9;
   filter: alpha(opacity=90);
   background-color: rgba(0,0,0,0.1);
 }
-.row p a:active {
+.row p a#startButton:active {
   opacity: 0.7;
   filter: alpha(opacity=70);
   background-color: rgba(80,200,80,0.9);
+}
+.row p a#startButton.invalid {
+  color: rgba(255,255,255,0.3);
 }
 input,
 input[type="text"],

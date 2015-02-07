@@ -3,7 +3,6 @@ html(lang="ja")
 
 	head
 		title= MineSweeper
-		//- link(rel='stylesheet', href='reset.css')
 		link(rel='stylesheet', href='main.css')
 		link(rel='stylesheet', href='startScreen.css')
 		link(rel='stylesheet', href='gameScreen.css')
@@ -44,26 +43,24 @@ html(lang="ja")
 
 				.row#sizeSelecter
 					p
-						input#xSize(value="5" maxlength="2")
+						input#xSize(required value="5" maxlength="2")
 						span ×
-						input#ySize(value="5" maxlength="2")
+						input#ySize(required value="5" maxlength="2")
 
 				.row#bombNumSelecter
 					p
 						span bomb
 						span ×
-						input#bombNum(value="5" maxlength="2")
+						input#bombNum(required value="5" maxlength="3")
 
 				.row#startButtonArea
 					p
-						a(onclick="onClickStartButton();")#startButton start!
+						a#startButton(onclick="onClickStartButton();") start!
 
 
-		//- .screen#endScreec
-		//- 	.wrapper
-		//- 		p GameOver!
 
 	script(src="lib/jquery-2.1.3.min.js")
 	script(src="gameLogic.js")
 	script(src="gameFront.js")
+	script(src="startPage.js")
 	script(src="main.js")
