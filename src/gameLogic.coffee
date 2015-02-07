@@ -109,7 +109,7 @@ window.generateGameLogic = (sizeX, sizeY, bomNum, onGameOver, onGameClear) ->
 		for y in [0..ySize-1]
 			for x in [0..xSize-1]
 
-				if FRONT_BOARD[y][x] is COVER_CHAR
+				if FRONT_BOARD[y][x] is COVER_CHAR or FRONT_BOARD[y][x] is FLAG_CHAR
 					numOfCoverCell += 1
 
 					if UNDER_BOARD[y][x] isnt BOMB_CHAR

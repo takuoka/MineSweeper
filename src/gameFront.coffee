@@ -1,6 +1,6 @@
 
 
-window.generateGame = (_parentId, _xSize, _ySize, _bombNum, onGameOver, onGameClear) ->
+window.generateGame = (_parentId, _xSize, _ySize, _bombNum, onGameOver, onGameClear, onClickCell) ->
 
 	if _parentId is null
 		alert "generateGame(_parentId) : ゲームを生成する要素のidを指定してください。"
@@ -42,6 +42,8 @@ window.generateGame = (_parentId, _xSize, _ySize, _bombNum, onGameOver, onGameCl
 
 
 
+	# ------------- main function ---------------
+
 	#この関数の最後に呼ぶ
 	initGame = ->
 		gameLogic = generateGameLogic xSize, ySize, bombNum, onGameOver, onGameClear
@@ -51,6 +53,7 @@ window.generateGame = (_parentId, _xSize, _ySize, _bombNum, onGameOver, onGameCl
 
 	# クリックイベント
 	onLeftClickOnCell  = (e) ->
+		onClickCell(e) if onClickCell
 		cell = e.target
 		result = gameLogic.open cell.x, cell.y
 		updateTable()

@@ -5,14 +5,36 @@ html(lang="ja")
 		title= MineSweeper
 		//- link(rel='stylesheet', href='reset.css')
 		link(rel='stylesheet', href='main.css')
-		link(rel='stylesheet', href='start.css')
-		link(rel='stylesheet', href='game.css')
+		link(rel='stylesheet', href='startScreen.css')
+		link(rel='stylesheet', href='gameScreen.css')
+		link(rel='stylesheet', href='endScreen.css')
 
 	body
 
 		.screen#gameScreen
 			.wrapper
-				#game
+				h2 Mine Sweeper
+
+				#gameArea
+					p#timer 00:00
+					#game
+					p#bombInfo bomb × <span id="bombInfoNum">5</span>
+
+				//- #giveupButtonArea
+				//- 	p#giveupText give up
+				//- 	p (・ェ・`=)
+
+
+		//- ゲームオーバーとクリア時に広がる背景
+		#spreadWrapper
+			#spreadBg
+
+
+		.screen#gameEndArea
+			.wrapper
+				h1
+				p
+					a(onclick="onClickRetryButton();") retry
 
 
 
@@ -34,7 +56,7 @@ html(lang="ja")
 
 				.row#startButtonArea
 					p
-						a(onclick="onClickStart();")#startButton start!
+						a(onclick="onClickStartButton();")#startButton start!
 
 
 		//- .screen#endScreec
@@ -43,5 +65,5 @@ html(lang="ja")
 
 	script(src="lib/jquery-2.1.3.min.js")
 	script(src="gameLogic.js")
-	script(src="game.js")
+	script(src="gameFront.js")
 	script(src="main.js")

@@ -119,7 +119,7 @@
       xSize = FRONT_BOARD[0].length;
       for (y = _i = 0, _ref = ySize - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; y = 0 <= _ref ? ++_i : --_i) {
         for (x = _j = 0, _ref1 = xSize - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; x = 0 <= _ref1 ? ++_j : --_j) {
-          if (FRONT_BOARD[y][x] === COVER_CHAR) {
+          if (FRONT_BOARD[y][x] === COVER_CHAR || FRONT_BOARD[y][x] === FLAG_CHAR) {
             numOfCoverCell += 1;
             if (UNDER_BOARD[y][x] !== BOMB_CHAR) {
               isCleared = false;
