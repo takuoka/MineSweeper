@@ -1,13 +1,21 @@
 console.log "main.coffee"
 
+window.onload = ->
+	# onClickStart()
+
+
 window.onClickStart =->
 
 	startScreen = document.getElementById "startScreen"
 	xSize       = document.getElementById("xSize").value
 	ySize       = document.getElementById("ySize").value
 	bombNum     = document.getElementById("bombNum").value
+	bombInfoNum = document.getElementById "bombInfoNum"
 
 	generateGame "game", xSize, ySize, bombNum, onGameOver, onGameClear
+
+	console.log bombInfoNum
+	bombInfoNum.innerHTML = bombNum
 
 	hide startScreen
 

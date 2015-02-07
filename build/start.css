@@ -1,6 +1,7 @@
 #startScreen {
   background-color: #6db2ce;
   color: #fff;
+  min-height: 600px;
   transition-property: opacity;
   transition-duration: 0.5s;
   opacity: 1;

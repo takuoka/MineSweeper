@@ -9,7 +9,16 @@
   <body>
     <div id="gameScreen" class="screen">
       <div class="wrapper">
-        <div id="game"></div>
+        <h2>Mine Sweeper</h2>
+        <div id="gameArea">
+          <p id="timer">00:00</p>
+          <div id="game"></div>
+          <p id="bombInfo">bomb × <span id="bombInfoNum">5</span></p>
+        </div>
+        <div id="giveupButtonArea">
+          <p id="giveupText">give up</p>
+          <p>(・ェ・`=)</p>
+        </div>
       </div>
     </div>
     <div id="startScreen" class="screen">
@@ -34,6 +43,6 @@
   </body>
   <script src="lib/jquery-2.1.3.min.js"></script>
   <script src="gameLogic.js"></script>
-  <script src="game.js"></script>
+  <script src="gameFront.js"></script>
   <script src="main.js"></script>
 </html>

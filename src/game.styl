@@ -1,15 +1,66 @@
 
-cellSize = 30px
-fontSize = 10px
+
+
+
+
+
+#gameScreen
+	background-color #f5b600
+	min-height 500px//後で調節
+	color gray
+
+	h2
+		text-align center
+		// padding-left 10%
+		margin 20px
+		font-size 20px
+		font-weight bold
+
+	#gameArea
+		p#timer
+			text-align center
+			margin 20px
+			font-size 20px
+			color gray
+		#game
+			margin 20px
+			table
+				margin 0 auto
+		p#bombInfo
+			margin 20px
+			text-align center
+			color gray
+
+	#giveupButtonArea
+		opacity 0.3
+		&:hover
+			opacity 1!important
+		p
+			text-align right
+		#giveupText
+			opacity 0.1
+
+
+
+
+
+//--------------------------------------------
+
+
+cellSize = 23px
+fontSize = 12px
 
 table
-	border-width 6px
+	border-width 8px
 	border-style solid
 	border-spacing 0px
 	border-color #999
+	background-color #fff
 	tr
 		td
 			div
+				transition-property background-color
+				transition-duration 0.5s
 				display table-cell
 				width cellSize
 				height cellSize
@@ -19,22 +70,22 @@ table
 				text-align: center
 				vertical-align middle
 
-				border-width 1px
+				border-width 2px
 				border-style dashed
 				border-color #ddd
 
 
 				&.closed, &.flag
-					border-style outset
+					border-style solid
 					border-color #aaa
 					background-color #ccc
 					&:hover
-						opacity 0.9
-					&:active
 						opacity 0.7
+					&:active
+						opacity 0.5
 
 				&.flag
-					background-color orange
+					background-color #c97aca
 
 					
 				&.zero
@@ -60,5 +111,5 @@ table
 					
 
 				&.bomb
-					background-color red
+					background-color #f55f62
 

@@ -3,13 +3,18 @@
 
   console.log("main.coffee");
 
+  window.onload = function() {};
+
   window.onClickStart = function() {
-    var bombNum, startScreen, xSize, ySize;
+    var bombInfoNum, bombNum, startScreen, xSize, ySize;
     startScreen = document.getElementById("startScreen");
     xSize = document.getElementById("xSize").value;
     ySize = document.getElementById("ySize").value;
     bombNum = document.getElementById("bombNum").value;
+    bombInfoNum = document.getElementById("bombInfoNum");
     generateGame("game", xSize, ySize, bombNum, onGameOver, onGameClear);
+    console.log(bombInfoNum);
+    bombInfoNum.innerHTML = bombNum;
     return hide(startScreen);
   };
 
