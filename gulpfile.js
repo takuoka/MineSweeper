@@ -21,6 +21,7 @@ var build = "./build/"
 
 gulp.task("launch_browserSync", function() {
     browserSync({
+        browser: 'Google Chrome Canary',
         server: {
             baseDir: build,
             index  : "index.html"
