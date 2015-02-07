@@ -1,16 +1,17 @@
-console.log "main.coffee"
 
 
 # -------------- events -----------------
 
 window.onload = ->
+	startValidation()
 	getElements()
 	# onClickStartButton()
 	# wait 600, ->
 	# 	showGameClearScreen()
 
 window.onClickStartButton = ->
-	gameStart()
+	if window.isValidConfig
+		gameStart()
 
 window.onClickRetryButton = ->
 	startScreen = document.getElementById "startScreen"
@@ -25,10 +26,10 @@ onClickCell = (e) ->
 	clickedX = e.pageX - 50#謎のズレ
 	clickedY = e.pageY - 50#謎のズレ
 
+
 onGameOver = ->
 	stopTimer()
 	showGameOverScreen()
-
 onGameClear = ->
 	stopTimer()
 	showGameClearScreen()
@@ -69,7 +70,6 @@ gameStart = ->
 
 	startTimer()
 
-
 deleteGame = ->
 	game = document.getElementById "game"
 	if game.childNodes.length >= 1
@@ -84,7 +84,6 @@ showGameClearScreen = ->
 	addClass spreadWrapper, "gameClear"
 	addClass gameEndArea, "gameClear"
 	showEndScreen()
-
 showGameOverScreen = ->
 	addClass spreadWrapper, "gameOver"
 	addClass gameEndArea, "gameOver"
@@ -94,15 +93,12 @@ showGameOverScreen = ->
 showEndScreen = ->
 	gameEndArea.style.display = "block"
 	spreadWrapper.style.display = "block"
-
 	spreadBg.style.top = clickedY + "px"
 	spreadBg.style.left = clickedX + "px"
-
 	wait 100, ->
 		spreadBg.className = "spread"
 		wait 300, ->
 			addClass gameEndArea, "show"
-
 hideEndScreen = ->
 	removeClass spreadBg, "spread"
 	removeClass gameEndArea, "show"
@@ -116,21 +112,18 @@ hideEndScreen = ->
 
 tickInterval = null;
 
-stopTimer = ->
-	clearInterval tickInterval
-
-resetTimer = ->
-	stopTimer()
-	timerElm.innerHTML = "00:00"
-
 startTimer = ->
 	startDate = new Date()
-
 	tick = ->
 		t = getElapsedTime startDate
 		timerString = t.minute + ":" + t.sec
 		timerElm.innerHTML = timerString
 	tickInterval = setInterval tick, 1000
+
+stopTimer = -> clearInterval tickInterval
+resetTimer = ->
+	stopTimer()
+	timerElm.innerHTML = "00:00"
 
 
 
@@ -138,9 +131,10 @@ startTimer = ->
 
 wait = (time, callback)-> setTimeout callback, time
 
-addClass = (elm, className) -> elm.className = elm.className + ' ' + className 
 
-removeClass = (elm, removeClassName) ->
+window.addClass = (elm, className) -> elm.className = elm.className + ' ' + className 
+
+window.removeClass = (elm, removeClassName) ->
     classString = elm.className
     nameIndex = classString.indexOf removeClassName
 
@@ -148,6 +142,7 @@ removeClass = (elm, removeClassName) ->
     	classString = classString.substr(0, nameIndex) + classString.substr(nameIndex+removeClassName.length)
 
     elm.className = classString
+
 
 fadeOut = (elm)->
 	elm.style.opacity = 0
@@ -159,6 +154,7 @@ fadeIn = (elm, callback)->
 		elm.style.opacity = 1
 		wait 500, ->
 			callback() if callback
+
 
 getElapsedTime = (startDate)->
 	nowDate   = new Date()
@@ -176,7 +172,6 @@ getElapsedTime = (startDate)->
 	elapsedTime.minute = zeroPadding_2 minute
 	elapsedTime.sec    = zeroPadding_2 sec
 	return elapsedTime
-
 
 zeroPadding_2 = (num) -> return ("0" + num).slice(-2)
 

@@ -27,7 +27,7 @@
 		text-align center
 		input, span
 			font-size 40px
-			max-width 60px
+			width 60px
 			text-align center
 			margin 5px
 			background-color rgba(0,0,0, 0)//0.01)
@@ -37,7 +37,10 @@
 			color white
 			border-bottom:3px white dashed;
 
-		a
+		#bombNum
+			width 80px
+
+		a#startButton
 			transition-property background-color, color
 			transition-duration 0.3s
 			font-size 50px
@@ -50,7 +53,12 @@
 			&:active
 				opacity 0.7
 				background-color rgba(80,200,80, 0.9)
-	
+
+			&.invalid
+				color rgba(255,255,255, 0.3)
+				
+				
+
 
 //Google Chrome のinput要素 フォーカス時の線を消す
 input,input[type="text"],input[type="password"],textarea,select
