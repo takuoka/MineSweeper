@@ -3,21 +3,8 @@
 
   console.log("main.coffee");
 
-  window.onload = function() {
-    return onClickStartButton();
-  };
-
   window.onClickStartButton = function() {
     return gameStart();
-  };
-
-  onGameOver = function() {
-    stopTimer();
-    return showGameOverScreen();
-  };
-
-  onGameClear = function() {
-    return alert("cleared!!");
   };
 
   window.onClickRetryButton = function() {
@@ -35,6 +22,15 @@
   onClickCell = function(e) {
     clickedX = e.pageX;
     return clickedY = e.pageY;
+  };
+
+  onGameOver = function() {
+    stopTimer();
+    return showGameOverScreen();
+  };
+
+  onGameClear = function() {
+    return alert("cleared!!");
   };
 
   gameStart = function() {
@@ -75,7 +71,7 @@
     spreadBg.style.left = clickedX + "px";
     return wait(100, function() {
       spreadBg.className = "spread";
-      return wait(500, function() {
+      return wait(300, function() {
         return addClass(gameEndArea, "show");
       });
     });
@@ -88,10 +84,8 @@
     gameEndArea = document.getElementById("gameEndArea");
     removeClass(spreadBg, "spread");
     removeClass(gameEndArea, "show");
-    return wait(500, function() {
-      spreadWrapper.style.display = "none";
-      return gameEndArea.style.display = "none";
-    });
+    spreadWrapper.style.display = "none";
+    return gameEndArea.style.display = "none";
   };
 
   tickInterval = null;

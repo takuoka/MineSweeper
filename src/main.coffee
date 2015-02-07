@@ -3,26 +3,19 @@ console.log "main.coffee"
 
 # -------------- events -----------------
 
-window.onload = ->
-	onClickStartButton()
+# window.onload = ->
+	# onClickStartButton()
 	# wait 600, ->
 	# 	showGameOverScreen()
 
 window.onClickStartButton = ->
 	gameStart()
 
-onGameOver = ->
-	# alert "gameOver!!"
-	stopTimer()
-	showGameOverScreen()
-
-onGameClear = ->
-	alert "cleared!!"
-
 window.onClickRetryButton = ->
 	startScreen = document.getElementById "startScreen"
 	fadeIn startScreen, ->
 		hideGameOverScreen()
+
 
 
 clickedX = null
@@ -31,7 +24,13 @@ onClickCell = (e) ->
 	clickedX = e.pageX
 	clickedY = e.pageY
 
+onGameOver = ->
+	# alert "gameOver!!"
+	stopTimer()
+	showGameOverScreen()
 
+onGameClear = ->
+	alert "cleared!!"
 
 
 # -------------- main function -----------------
@@ -80,7 +79,7 @@ showGameOverScreen = ->
 
 	wait 100, ->
 		spreadBg.className = "spread"
-		wait 500, ->
+		wait 300, ->
 			addClass gameEndArea, "show"
 
 hideGameOverScreen = ->
@@ -89,9 +88,8 @@ hideGameOverScreen = ->
 	gameEndArea = document.getElementById "gameEndArea"
 	removeClass spreadBg, "spread"
 	removeClass gameEndArea, "show"
-	wait 500, ->
-		spreadWrapper.style.display = "none"
-		gameEndArea.style.display = "none"
+	spreadWrapper.style.display = "none"
+	gameEndArea.style.display = "none"
 
 
 
