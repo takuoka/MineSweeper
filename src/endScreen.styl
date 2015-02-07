@@ -24,7 +24,7 @@
 		height 100px
 		border-radius 50px
 		
-		background-color rgba(255,0,0,0.5)
+		// background-color rgba(255,0,0,0.5)
 		
 		transform scale(0.1)
 		transition-property transform
@@ -32,6 +32,14 @@
 		&.spread
 			transform scale(30)
 
+
+	&.gameOver
+		#spreadBg
+			background-color rgba(255,0,0,0.5)
+
+	&.gameClear
+		#spreadBg
+			background-color rgba(0,255,0,0.5)
 
 
 #gameEndArea
@@ -66,4 +74,11 @@
 				&:active
 					opacity 0.7
 					background-color rgba(0,0,0, 0.9)
-	
+	&.gameOver
+		h1:before
+			content "GameOver"	
+
+	&.gameClear
+		h1:before
+			content "GameClear!"					
+

@@ -3,10 +3,11 @@ console.log "main.coffee"
 
 # -------------- events -----------------
 
-# window.onload = ->
+window.onload = ->
+	getElements()
 	# onClickStartButton()
 	# wait 600, ->
-	# 	showGameOverScreen()
+	# 	showGameClearScreen()
 
 window.onClickStartButton = ->
 	gameStart()
@@ -14,38 +15,52 @@ window.onClickStartButton = ->
 window.onClickRetryButton = ->
 	startScreen = document.getElementById "startScreen"
 	fadeIn startScreen, ->
-		hideGameOverScreen()
+		hideEndScreen()
 
 
 
 clickedX = null
 clickedY = null
 onClickCell = (e) ->
-	clickedX = e.pageX
-	clickedY = e.pageY
+	clickedX = e.pageX - 50#謎のズレ
+	clickedY = e.pageY - 50#謎のズレ
 
 onGameOver = ->
-	# alert "gameOver!!"
 	stopTimer()
 	showGameOverScreen()
 
 onGameClear = ->
-	alert "cleared!!"
+	stopTimer()
+	showGameClearScreen()
+
+
+# ------------ element variables --------------
+
+spreadWrapper = null
+gameEndArea = null
+startScreen　= null
+bombInfoNum = null
+spreadBg = null
+timerElm = null
+getElements = ->
+	startScreen = document.getElementById "startScreen"
+	spreadWrapper = document.getElementById "spreadWrapper"
+	gameEndArea = document.getElementById "gameEndArea"
+	bombInfoNum = document.getElementById "bombInfoNum"
+	spreadBg = document.getElementById "spreadBg"
+	timerElm = document.getElementById "timer"
+
+
 
 
 # -------------- main function -----------------
 
-
 gameStart = ->
-
 	resetTimer()
-	deleteGameTable()
-
-	startScreen = document.getElementById "startScreen"
+	deleteGame()
 	xSize       = document.getElementById("xSize").value
 	ySize       = document.getElementById("ySize").value
 	bombNum     = document.getElementById("bombNum").value
-	bombInfoNum = document.getElementById "bombInfoNum"
 
 	generateGame "game", xSize, ySize, bombNum, onGameOver, onGameClear, onClickCell
 	bombInfoNum.innerHTML = bombNum
@@ -54,23 +69,29 @@ gameStart = ->
 
 	startTimer()
 
-deleteGameTable = ->
 
+deleteGame = ->
 	game = document.getElementById "game"
-
 	if game.childNodes.length >= 1
-		# for (var i =aNode.childNodes.length-1; i>=0; i--)
 		for i in [game.childNodes.length-1..0]
 			game.removeChild game.childNodes[i]
 
 
 
-# ---------------- game end screen -------------------------
+# ---------------- gameover & clear Screen -------------------------
+
+showGameClearScreen = ->
+	addClass spreadWrapper, "gameClear"
+	addClass gameEndArea, "gameClear"
+	showEndScreen()
 
 showGameOverScreen = ->
-	spreadWrapper = document.getElementById "spreadWrapper"
-	gameEndArea = document.getElementById "gameEndArea"
-	spreadBg = document.getElementById "spreadBg"
+	addClass spreadWrapper, "gameOver"
+	addClass gameEndArea, "gameOver"
+	showEndScreen()
+
+
+showEndScreen = ->
 	gameEndArea.style.display = "block"
 	spreadWrapper.style.display = "block"
 
@@ -82,10 +103,7 @@ showGameOverScreen = ->
 		wait 300, ->
 			addClass gameEndArea, "show"
 
-hideGameOverScreen = ->
-	spreadWrapper = document.getElementById "spreadWrapper"
-	spreadBg = document.getElementById "spreadBg"
-	gameEndArea = document.getElementById "gameEndArea"
+hideEndScreen = ->
 	removeClass spreadBg, "spread"
 	removeClass gameEndArea, "show"
 	spreadWrapper.style.display = "none"
@@ -95,6 +113,7 @@ hideGameOverScreen = ->
 
 
 # ---------------- timer -------------------------
+
 tickInterval = null;
 
 stopTimer = ->
@@ -102,11 +121,9 @@ stopTimer = ->
 
 resetTimer = ->
 	stopTimer()
-	timerElm = document.getElementById "timer"
 	timerElm.innerHTML = "00:00"
 
 startTimer = ->
-	timerElm = document.getElementById "timer"
 	startDate = new Date()
 
 	tick = ->
@@ -118,6 +135,30 @@ startTimer = ->
 
 
 # ---------------- util function -------------------------
+
+wait = (time, callback)-> setTimeout callback, time
+
+addClass = (elm, className) -> elm.className = elm.className + ' ' + className 
+
+removeClass = (elm, removeClassName) ->
+    classString = elm.className
+    nameIndex = classString.indexOf removeClassName
+
+    if nameIndex isnt -1
+    	classString = classString.substr(0, nameIndex) + classString.substr(nameIndex+removeClassName.length)
+
+    elm.className = classString
+
+fadeOut = (elm)->
+	elm.style.opacity = 0
+	wait 500, -> elm.style.display = "none"
+
+fadeIn = (elm, callback)->
+	elm.style.display = "block"
+	wait 100, ->
+		elm.style.opacity = 1
+		wait 500, ->
+			callback() if callback
 
 getElapsedTime = (startDate)->
 	nowDate   = new Date()
@@ -140,28 +181,6 @@ getElapsedTime = (startDate)->
 zeroPadding_2 = (num) -> return ("0" + num).slice(-2)
 
 
-fadeOut = (elm)->
-	elm.style.opacity = 0
-	wait 500, -> elm.style.display = "none"
-
-fadeIn = (elm, callback)->
-	elm.style.display = "block"
-	wait 100, ->
-		elm.style.opacity = 1
-		wait 500, ->
-			callback() if callback
-
-addClass = (elm, className) -> elm.className = elm.className + ' ' + className 
-removeClass = (elm, removeClassName) ->
-    classString = elm.className
-    nameIndex = classString.indexOf removeClassName
-
-    if nameIndex isnt -1
-    	classString = classString.substr(0, nameIndex) + classString.substr(nameIndex+removeClassName.length)
-
-    elm.className = classString
-
-wait = (time, callback)-> setTimeout callback, time
 
 
 

@@ -1,7 +1,11 @@
 (function() {
-  var addClass, clickedX, clickedY, deleteGameTable, fadeIn, fadeOut, gameStart, getElapsedTime, hideGameOverScreen, onClickCell, onGameClear, onGameOver, removeClass, resetTimer, showGameOverScreen, startTimer, stopTimer, tickInterval, wait, zeroPadding_2;
+  var addClass, bombInfoNum, clickedX, clickedY, deleteGame, fadeIn, fadeOut, gameEndArea, gameStart, getElapsedTime, getElements, hideEndScreen, onClickCell, onGameClear, onGameOver, removeClass, resetTimer, showEndScreen, showGameClearScreen, showGameOverScreen, spreadBg, spreadWrapper, startScreen, startTimer, stopTimer, tickInterval, timerElm, wait, zeroPadding_2;
 
   console.log("main.coffee");
+
+  window.onload = function() {
+    return getElements();
+  };
 
   window.onClickStartButton = function() {
     return gameStart();
@@ -11,7 +15,7 @@
     var startScreen;
     startScreen = document.getElementById("startScreen");
     return fadeIn(startScreen, function() {
-      return hideGameOverScreen();
+      return hideEndScreen();
     });
   };
 
@@ -20,8 +24,8 @@
   clickedY = null;
 
   onClickCell = function(e) {
-    clickedX = e.pageX;
-    return clickedY = e.pageY;
+    clickedX = e.pageX - 50;
+    return clickedY = e.pageY - 50;
   };
 
   onGameOver = function() {
@@ -30,25 +34,45 @@
   };
 
   onGameClear = function() {
-    return alert("cleared!!");
+    stopTimer();
+    return showGameClearScreen();
+  };
+
+  spreadWrapper = null;
+
+  gameEndArea = null;
+
+  startScreen = null;
+
+  bombInfoNum = null;
+
+  spreadBg = null;
+
+  timerElm = null;
+
+  getElements = function() {
+    startScreen = document.getElementById("startScreen");
+    spreadWrapper = document.getElementById("spreadWrapper");
+    gameEndArea = document.getElementById("gameEndArea");
+    bombInfoNum = document.getElementById("bombInfoNum");
+    spreadBg = document.getElementById("spreadBg");
+    return timerElm = document.getElementById("timer");
   };
 
   gameStart = function() {
-    var bombInfoNum, bombNum, startScreen, xSize, ySize;
+    var bombNum, xSize, ySize;
     resetTimer();
-    deleteGameTable();
-    startScreen = document.getElementById("startScreen");
+    deleteGame();
     xSize = document.getElementById("xSize").value;
     ySize = document.getElementById("ySize").value;
     bombNum = document.getElementById("bombNum").value;
-    bombInfoNum = document.getElementById("bombInfoNum");
     generateGame("game", xSize, ySize, bombNum, onGameOver, onGameClear, onClickCell);
     bombInfoNum.innerHTML = bombNum;
     fadeOut(startScreen);
     return startTimer();
   };
 
-  deleteGameTable = function() {
+  deleteGame = function() {
     var game, i, _i, _ref, _results;
     game = document.getElementById("game");
     if (game.childNodes.length >= 1) {
@@ -60,11 +84,19 @@
     }
   };
 
+  showGameClearScreen = function() {
+    addClass(spreadWrapper, "gameClear");
+    addClass(gameEndArea, "gameClear");
+    return showEndScreen();
+  };
+
   showGameOverScreen = function() {
-    var gameEndArea, spreadBg, spreadWrapper;
-    spreadWrapper = document.getElementById("spreadWrapper");
-    gameEndArea = document.getElementById("gameEndArea");
-    spreadBg = document.getElementById("spreadBg");
+    addClass(spreadWrapper, "gameOver");
+    addClass(gameEndArea, "gameOver");
+    return showEndScreen();
+  };
+
+  showEndScreen = function() {
     gameEndArea.style.display = "block";
     spreadWrapper.style.display = "block";
     spreadBg.style.top = clickedY + "px";
@@ -77,11 +109,7 @@
     });
   };
 
-  hideGameOverScreen = function() {
-    var gameEndArea, spreadBg, spreadWrapper;
-    spreadWrapper = document.getElementById("spreadWrapper");
-    spreadBg = document.getElementById("spreadBg");
-    gameEndArea = document.getElementById("gameEndArea");
+  hideEndScreen = function() {
     removeClass(spreadBg, "spread");
     removeClass(gameEndArea, "show");
     spreadWrapper.style.display = "none";
@@ -95,15 +123,12 @@
   };
 
   resetTimer = function() {
-    var timerElm;
     stopTimer();
-    timerElm = document.getElementById("timer");
     return timerElm.innerHTML = "00:00";
   };
 
   startTimer = function() {
-    var startDate, tick, timerElm;
-    timerElm = document.getElementById("timer");
+    var startDate, tick;
     startDate = new Date();
     tick = function() {
       var t, timerString;
@@ -114,23 +139,22 @@
     return tickInterval = setInterval(tick, 1000);
   };
 
-  getElapsedTime = function(startDate) {
-    var elapsedTime, hour, minute, nowDate, sec, totalTime;
-    nowDate = new Date();
-    totalTime = nowDate.getTime() - startDate.getTime();
-    hour = Math.floor(totalTime / (60 * 60 * 1000));
-    totalTime = totalTime - (hour * 60 * 60 * 1000);
-    minute = Math.floor(totalTime / (60 * 1000));
-    totalTime = totalTime - (minute * 60 * 1000);
-    sec = Math.floor(totalTime / 1000);
-    elapsedTime = {};
-    elapsedTime.minute = zeroPadding_2(minute);
-    elapsedTime.sec = zeroPadding_2(sec);
-    return elapsedTime;
+  wait = function(time, callback) {
+    return setTimeout(callback, time);
   };
 
-  zeroPadding_2 = function(num) {
-    return ("0" + num).slice(-2);
+  addClass = function(elm, className) {
+    return elm.className = elm.className + ' ' + className;
+  };
+
+  removeClass = function(elm, removeClassName) {
+    var classString, nameIndex;
+    classString = elm.className;
+    nameIndex = classString.indexOf(removeClassName);
+    if (nameIndex !== -1) {
+      classString = classString.substr(0, nameIndex) + classString.substr(nameIndex + removeClassName.length);
+    }
+    return elm.className = classString;
   };
 
   fadeOut = function(elm) {
@@ -152,22 +176,23 @@
     });
   };
 
-  addClass = function(elm, className) {
-    return elm.className = elm.className + ' ' + className;
+  getElapsedTime = function(startDate) {
+    var elapsedTime, hour, minute, nowDate, sec, totalTime;
+    nowDate = new Date();
+    totalTime = nowDate.getTime() - startDate.getTime();
+    hour = Math.floor(totalTime / (60 * 60 * 1000));
+    totalTime = totalTime - (hour * 60 * 60 * 1000);
+    minute = Math.floor(totalTime / (60 * 1000));
+    totalTime = totalTime - (minute * 60 * 1000);
+    sec = Math.floor(totalTime / 1000);
+    elapsedTime = {};
+    elapsedTime.minute = zeroPadding_2(minute);
+    elapsedTime.sec = zeroPadding_2(sec);
+    return elapsedTime;
   };
 
-  removeClass = function(elm, removeClassName) {
-    var classString, nameIndex;
-    classString = elm.className;
-    nameIndex = classString.indexOf(removeClassName);
-    if (nameIndex !== -1) {
-      classString = classString.substr(0, nameIndex) + classString.substr(nameIndex + removeClassName.length);
-    }
-    return elm.className = classString;
-  };
-
-  wait = function(time, callback) {
-    return setTimeout(callback, time);
+  zeroPadding_2 = function(num) {
+    return ("0" + num).slice(-2);
   };
 
 }).call(this);
