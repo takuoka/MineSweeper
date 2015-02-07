@@ -30,7 +30,7 @@ gameStart = ->
 	generateGame "game", xSize, ySize, bombNum, onGameOver, onGameClear
 	bombInfoNum.innerHTML = bombNum
 
-	hide startScreen
+	fadeOut startScreen
 
 	startTimer()
 
@@ -58,30 +58,29 @@ startTimer = ->
 # ---------------- util function -------------------------
 
 getElapsedTime = (startDate)->
-	nowDate = new Date()
+	nowDate   = new Date()
 	totalTime = nowDate.getTime() - startDate.getTime()
 
-	hour = Math.floor(totalTime/(60*60*1000))
+	hour      = Math.floor(totalTime/(60*60*1000))
 	totalTime = totalTime-(hour*60*60*1000)
 
-	minute = Math.floor(totalTime/(60*1000))
+	minute    = Math.floor(totalTime/(60*1000))
 	totalTime = totalTime-(minute*60*1000)
 
-	sec = Math.floor(totalTime/1000)
+	sec       = Math.floor(totalTime/1000)
 
-	elapsedTime = {}
+	elapsedTime        = {}
 	elapsedTime.minute = zeroPadding_2 minute
-	elapsedTime.sec = zeroPadding_2 sec
+	elapsedTime.sec    = zeroPadding_2 sec
 	return elapsedTime
 
 
 zeroPadding_2 = (num) -> return ("0" + num).slice(-2)
 
 
-hide = (elm)->
+fadeOut = (elm)->
 	elm.style.opacity = 0
 	wait 500, -> elm.style.display = "none"
-
 
 wait = (time, callback)-> setTimeout callback, time
 

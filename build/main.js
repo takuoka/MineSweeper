@@ -1,5 +1,5 @@
 (function() {
-  var gameStart, getElapsedTime, hide, onGameClear, onGameOver, startTimer, stopTimer, tickInterval, wait, zeroPadding_2;
+  var fadeOut, gameStart, getElapsedTime, onGameClear, onGameOver, startTimer, stopTimer, tickInterval, wait, zeroPadding_2;
 
   console.log("main.coffee");
 
@@ -29,7 +29,7 @@
     bombInfoNum = document.getElementById("bombInfoNum");
     generateGame("game", xSize, ySize, bombNum, onGameOver, onGameClear);
     bombInfoNum.innerHTML = bombNum;
-    hide(startScreen);
+    fadeOut(startScreen);
     return startTimer();
   };
 
@@ -71,7 +71,7 @@
     return ("0" + num).slice(-2);
   };
 
-  hide = function(elm) {
+  fadeOut = function(elm) {
     elm.style.opacity = 0;
     return wait(500, function() {
       return elm.style.display = "none";
