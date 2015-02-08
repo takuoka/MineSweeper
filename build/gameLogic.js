@@ -5,13 +5,13 @@
     SIZE_Y = 5;
     BOMB_NUM = 5;
     if (sizeX) {
-      SIZE_X = sizeX;
+      SIZE_X = parseInt(sizeX);
     }
     if (sizeY) {
-      SIZE_Y = sizeY;
+      SIZE_Y = parseInt(sizeY);
     }
     if (bomNum) {
-      BOMB_NUM = bomNum;
+      BOMB_NUM = parseInt(bomNum);
     }
     UNDER_BOARD = [];
     FRONT_BOARD = [];
@@ -83,17 +83,16 @@
       var isCleared, isGameover, result;
       result = UNDER_BOARD[y][x];
       FRONT_BOARD[y][x] = result;
-      isCleared = isClearedGame();
       isGameover = result === BOMB_CHAR;
-      if (isCleared || isGameover) {
+      isCleared = isClearedGame();
+      if (isGameover) {
+        onGameOver();
         openAll();
+        return;
       }
       if (isCleared) {
         onGameClear();
-        return;
-      }
-      if (isGameover) {
-        onGameOver();
+        openAll();
         return;
       }
       if (result === 0) {
@@ -104,33 +103,23 @@
         });
       }
     };
-    putFlag = function(x, y) {
-      if (FRONT_BOARD[y][x] === COVER_CHAR) {
-        return FRONT_BOARD[y][x] = FLAG_CHAR;
-      } else if (FRONT_BOARD[y][x] === FLAG_CHAR) {
-        return FRONT_BOARD[y][x] = COVER_CHAR;
-      }
-    };
     isClearedGame = function() {
-      var isCleared, numOfCoverCell, x, xSize, y, ySize, _i, _j, _ref, _ref1;
-      isCleared = true;
-      numOfCoverCell = 0;
+      var cell, numOfCoverCell, x, xSize, y, ySize, _i, _j, _ref, _ref1;
       ySize = FRONT_BOARD.length;
       xSize = FRONT_BOARD[0].length;
+      numOfCoverCell = 0;
       for (y = _i = 0, _ref = ySize - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; y = 0 <= _ref ? ++_i : --_i) {
         for (x = _j = 0, _ref1 = xSize - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; x = 0 <= _ref1 ? ++_j : --_j) {
-          if (FRONT_BOARD[y][x] === COVER_CHAR || FRONT_BOARD[y][x] === FLAG_CHAR) {
+          cell = FRONT_BOARD[y][x];
+          if (cell === COVER_CHAR || cell === FLAG_CHAR) {
             numOfCoverCell += 1;
-            if (UNDER_BOARD[y][x] !== BOMB_CHAR) {
-              isCleared = false;
-            }
           }
         }
       }
-      if (numOfCoverCell === 0) {
-        return false;
+      if (numOfCoverCell === BOMB_NUM) {
+        return true;
       } else {
-        return isCleared;
+        return false;
       }
     };
     openAll = function() {
@@ -149,6 +138,13 @@
         })());
       }
       return _results;
+    };
+    putFlag = function(x, y) {
+      if (FRONT_BOARD[y][x] === COVER_CHAR) {
+        return FRONT_BOARD[y][x] = FLAG_CHAR;
+      } else if (FRONT_BOARD[y][x] === FLAG_CHAR) {
+        return FRONT_BOARD[y][x] = COVER_CHAR;
+      }
     };
     dumpBoards = function() {
       dumpBoard(UNDER_BOARD);

@@ -78,13 +78,24 @@ deleteGame = ->
 # ---------------- gameover & clear Screen -------------------------
 
 showGameClearScreen = ->
+	removeClass spreadWrapper, "gameOver"
+	removeClass gameEndArea, "gameOver"
+	removeClass spreadWrapper, "gameClear"
+	removeClass gameEndArea, "gameClear"
+
 	addClass spreadWrapper, "gameClear"
 	addClass gameEndArea, "gameClear"
 	showEndScreen()
 showGameOverScreen = ->
+	removeClass spreadWrapper, "gameClear"
+	removeClass gameEndArea, "gameClear"
+	removeClass spreadWrapper, "gameOver"
+	removeClass gameEndArea, "gameOver"
+
 	addClass spreadWrapper, "gameOver"
 	addClass gameEndArea, "gameOver"
 	showEndScreen()
+
 
 
 showEndScreen = ->
