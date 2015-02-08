@@ -3,14 +3,11 @@
 # -------------- events -----------------
 
 window.onload = ->
-	startValidation()
+	window.startValidation()# startPage.coffeeの初期化
 	getElements()
-	# onClickStartButton()
-	# wait 600, ->
-	# 	showGameClearScreen()
 
 window.onClickStartButton = ->
-	if window.isValidConfig
+	if window.isValidConfig# startPage.coffeeにて判定されている
 		gameStart()
 
 window.onClickRetryButton = ->
@@ -54,7 +51,7 @@ getElements = ->
 
 
 
-# -------------- main function -----------------
+# -------------- game start and reset -----------------
 
 gameStart = ->
 	resetTimer()

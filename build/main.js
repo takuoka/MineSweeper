@@ -2,7 +2,7 @@
   var bombInfoNum, clickedX, clickedY, deleteGame, fadeIn, fadeOut, gameEndArea, gameStart, getElapsedTime, getElements, hideEndScreen, onClickCell, onGameClear, onGameOver, resetTimer, showEndScreen, showGameClearScreen, showGameOverScreen, spreadBg, spreadWrapper, startScreen, startTimer, stopTimer, tickInterval, timerElm, wait, zeroPadding_2;
 
   window.onload = function() {
-    startValidation();
+    window.startValidation();
     return getElements();
   };
 
