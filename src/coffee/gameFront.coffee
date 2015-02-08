@@ -1,4 +1,14 @@
 
+# main.js にて ゲーム生成に使われる
+# gameLogic.js を モジュールとして使用している
+
+# 特定のDOMの中に table要素を生成して、マインスイーパーをつくる。
+# クリア、ゲームオーバー、セルクリック時のイベントハンドラを引数にもつ。
+
+# 内容
+# ①table要素とその中身を生成する	
+# ②table要素のセルがクリックされたら gameLogic.js の open関数を実行する。
+# ③table要素のセルのクラス名を変更して、gameLogic.jsの状態を反映する。	
 
 window.generateGame = (_parentId, _xSize, _ySize, _bombNum, onGameOver, onGameClear, onClickCell) ->
 
