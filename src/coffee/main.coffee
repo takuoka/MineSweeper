@@ -2,7 +2,7 @@
 
 
 
-# ------------ element variables --------------
+# ---------- DOM element variables ------------
 
 el_spreadWrapper = null
 el_gameEndArea = null
@@ -23,14 +23,14 @@ getElements = ->
 
 
 
-# -------------- events -------------------------------
+# -------------- events ----------------------
 
 window.onload = ->
-	window.startValidation()# startPage.coffeeの実行
+	window.startValidation()# startPage.js の実行
 	getElements()
 
 window.onClickStartButton = ->
-	if window.isValidConfig# startPage.coffeeにて判定されている
+	if window.isValidConfig# startPage.js にて判定されている
 		gameStart()
 
 window.onClickRetryButton = ->
@@ -62,7 +62,7 @@ onGameClear = ->
 
 
 
-# -------------- game start ---------------------
+# -------------- game start 関数 ---------------------
 
 gameStart = ->
 	resetTimer()
@@ -90,7 +90,7 @@ deleteGame = ->
 
 
 
-# ---------------- GameOver & GameClear の show と hide -------------------------
+# ----------- GameOver & GameClear の show と hide 関数 ------------
 
 showGameClearScreen = ->
 	removeClass el_spreadWrapper, "gameOver"
@@ -131,7 +131,7 @@ hideEndScreen = ->
 
 
 
-# ---------------- timer -------------------------
+# ---------------- timer の start & stop 関数 -----------------
 
 tickInterval = null;
 
