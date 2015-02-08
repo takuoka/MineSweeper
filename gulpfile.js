@@ -14,6 +14,7 @@ var pleeease = require('gulp-pleeease');
 var spawn = require('child_process').spawn;//gulpのautoReloadのため
 
 
+
 var src = "./src/"
 var build = "./build/"
 
@@ -31,10 +32,8 @@ gulp.task("launch_browserSync", function() {
 
 
 
-
-
 gulp.task('stylus_task', function () {
-    gulp.src(src+'*.styl')
+    gulp.src(src+'styl/*.styl')
         .pipe(plumber())
         .pipe(stylus())
         .pipe(pleeease({
@@ -43,14 +42,14 @@ gulp.task('stylus_task', function () {
             },
             minifier: false
         }))
-        .pipe(gulp.dest(build))
+        .pipe(gulp.dest(build+"css/"))
 });
 
 gulp.task("coffee_task", function() {
-    gulp.src(src+"*.coffee")
+    gulp.src(src+"coffee/*.coffee")
         .pipe(plumber())
         .pipe(coffee({bare: false}))
-        .pipe(gulp.dest(build))
+        .pipe(gulp.dest(build+"js/"))
 });
 
 
@@ -67,22 +66,22 @@ gulp.task('jade_task', function () {
 
 
 
-
 gulp.task("css_task", function() {
-    gulp.src(build+"*.css")
+    gulp.src(build+"css/*.css")
         .pipe(browserSync.reload({stream:true}))
 });
 
 gulp.task("js_task", function() {
-    gulp.src(build+"*.js")
+    gulp.src(build+"js/*.js")
         .pipe(browserSync.reload({stream:true}))
 });
-
 
 gulp.task('html_task', function () {
   gulp.src(build+'*.html')
     .pipe(browserSync.reload({stream:true}))
 });
+
+
 
 
 
@@ -93,12 +92,12 @@ gulp.task("start", function() {
     gulp.run('coffee_task');
 
     gulp.watch(src+"*.jade",["jade_task"]);
-    gulp.watch(src+"*.styl",["stylus_task"]);
-    gulp.watch(src+"*.coffee",["coffee_task"]);
+    gulp.watch(src+"styl/*.styl",["stylus_task"]);
+    gulp.watch(src+"coffee/*.coffee",["coffee_task"]);
 
     gulp.watch(build+"*.html",["html_task"]);
-    gulp.watch(build+"*.css",["css_task"]);
-    gulp.watch(build+"*.js",["js_task"]);
+    gulp.watch(build+"css/*.css",["css_task"]);
+    gulp.watch(build+"js/*.js",["js_task"]);
 });
 
 

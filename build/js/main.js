@@ -1,5 +1,26 @@
 (function() {
-  var bombInfoNum, clickedX, clickedY, deleteGame, fadeIn, fadeOut, gameEndArea, gameStart, getElapsedTime, getElements, hideEndScreen, onClickCell, onGameClear, onGameOver, resetTimer, showEndScreen, showGameClearScreen, showGameOverScreen, spreadBg, spreadWrapper, startScreen, startTimer, stopTimer, tickInterval, timerElm, wait, zeroPadding_2;
+  var addClass, clickedX, clickedY, deleteGame, el_bombInfoNum, el_gameEndArea, el_spreadBg, el_spreadWrapper, el_startScreen, el_timerElm, fadeIn, fadeOut, gameStart, getElapsedTime, getElements, hideEndScreen, onClickCell, onGameClear, onGameOver, removeClass, resetTimer, showEndScreen, showGameClearScreen, showGameOverScreen, startTimer, stopTimer, tickInterval, wait, zeroPadding_2;
+
+  el_spreadWrapper = null;
+
+  el_gameEndArea = null;
+
+  el_startScreen = null;
+
+  el_bombInfoNum = null;
+
+  el_spreadBg = null;
+
+  el_timerElm = null;
+
+  getElements = function() {
+    el_startScreen = document.getElementById("startScreen");
+    el_spreadWrapper = document.getElementById("spreadWrapper");
+    el_gameEndArea = document.getElementById("gameEndArea");
+    el_bombInfoNum = document.getElementById("bombInfoNum");
+    el_spreadBg = document.getElementById("spreadBg");
+    return el_timerElm = document.getElementById("timer");
+  };
 
   window.onload = function() {
     window.startValidation();
@@ -13,9 +34,7 @@
   };
 
   window.onClickRetryButton = function() {
-    var startScreen;
-    startScreen = document.getElementById("startScreen");
-    return fadeIn(startScreen, function() {
+    return fadeIn(el_startScreen, function() {
       return hideEndScreen();
     });
   };
@@ -39,27 +58,6 @@
     return showGameClearScreen();
   };
 
-  spreadWrapper = null;
-
-  gameEndArea = null;
-
-  startScreen = null;
-
-  bombInfoNum = null;
-
-  spreadBg = null;
-
-  timerElm = null;
-
-  getElements = function() {
-    startScreen = document.getElementById("startScreen");
-    spreadWrapper = document.getElementById("spreadWrapper");
-    gameEndArea = document.getElementById("gameEndArea");
-    bombInfoNum = document.getElementById("bombInfoNum");
-    spreadBg = document.getElementById("spreadBg");
-    return timerElm = document.getElementById("timer");
-  };
-
   gameStart = function() {
     var bombNum, xSize, ySize;
     resetTimer();
@@ -68,8 +66,8 @@
     ySize = document.getElementById("ySize").value;
     bombNum = document.getElementById("bombNum").value;
     generateGame("game", xSize, ySize, bombNum, onGameOver, onGameClear, onClickCell);
-    bombInfoNum.innerHTML = bombNum;
-    fadeOut(startScreen);
+    el_bombInfoNum.innerHTML = bombNum;
+    fadeOut(el_startScreen);
     return startTimer();
   };
 
@@ -86,43 +84,43 @@
   };
 
   showGameClearScreen = function() {
-    removeClass(spreadWrapper, "gameOver");
-    removeClass(gameEndArea, "gameOver");
-    removeClass(spreadWrapper, "gameClear");
-    removeClass(gameEndArea, "gameClear");
-    addClass(spreadWrapper, "gameClear");
-    addClass(gameEndArea, "gameClear");
+    removeClass(el_spreadWrapper, "gameOver");
+    removeClass(el_gameEndArea, "gameOver");
+    removeClass(el_spreadWrapper, "gameClear");
+    removeClass(el_gameEndArea, "gameClear");
+    addClass(el_spreadWrapper, "gameClear");
+    addClass(el_gameEndArea, "gameClear");
     return showEndScreen();
   };
 
   showGameOverScreen = function() {
-    removeClass(spreadWrapper, "gameClear");
-    removeClass(gameEndArea, "gameClear");
-    removeClass(spreadWrapper, "gameOver");
-    removeClass(gameEndArea, "gameOver");
-    addClass(spreadWrapper, "gameOver");
-    addClass(gameEndArea, "gameOver");
+    removeClass(el_spreadWrapper, "gameClear");
+    removeClass(el_gameEndArea, "gameClear");
+    removeClass(el_spreadWrapper, "gameOver");
+    removeClass(el_gameEndArea, "gameOver");
+    addClass(el_spreadWrapper, "gameOver");
+    addClass(el_gameEndArea, "gameOver");
     return showEndScreen();
   };
 
   showEndScreen = function() {
-    gameEndArea.style.display = "block";
-    spreadWrapper.style.display = "block";
-    spreadBg.style.top = clickedY + "px";
-    spreadBg.style.left = clickedX + "px";
+    el_gameEndArea.style.display = "block";
+    el_spreadWrapper.style.display = "block";
+    el_spreadBg.style.top = clickedY + "px";
+    el_spreadBg.style.left = clickedX + "px";
     return wait(100, function() {
-      spreadBg.className = "spread";
+      el_spreadBg.className = "spread";
       return wait(300, function() {
-        return addClass(gameEndArea, "show");
+        return addClass(el_gameEndArea, "show");
       });
     });
   };
 
   hideEndScreen = function() {
-    removeClass(spreadBg, "spread");
-    removeClass(gameEndArea, "show");
-    spreadWrapper.style.display = "none";
-    return gameEndArea.style.display = "none";
+    removeClass(el_spreadBg, "spread");
+    removeClass(el_gameEndArea, "show");
+    el_spreadWrapper.style.display = "none";
+    return el_gameEndArea.style.display = "none";
   };
 
   tickInterval = null;
@@ -134,7 +132,7 @@
       var t, timerString;
       t = getElapsedTime(startDate);
       timerString = t.minute + ":" + t.sec;
-      return timerElm.innerHTML = timerString;
+      return el_timerElm.innerHTML = timerString;
     };
     return tickInterval = setInterval(tick, 1000);
   };
@@ -145,18 +143,18 @@
 
   resetTimer = function() {
     stopTimer();
-    return timerElm.innerHTML = "00:00";
+    return el_timerElm.innerHTML = "00:00";
   };
 
   wait = function(time, callback) {
     return setTimeout(callback, time);
   };
 
-  window.addClass = function(elm, className) {
+  addClass = function(elm, className) {
     return elm.className = elm.className + ' ' + className;
   };
 
-  window.removeClass = function(elm, removeClassName) {
+  removeClass = function(elm, removeClassName) {
     var classString, nameIndex;
     classString = elm.className;
     nameIndex = classString.indexOf(removeClassName);

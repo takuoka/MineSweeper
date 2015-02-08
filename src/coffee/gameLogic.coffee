@@ -1,5 +1,4 @@
 
-
 window.generateGameLogic = (sizeX, sizeY, bomNum, onGameOver, onGameClear) ->
 
 	#盤面のサイズ, 地雷の数 (デフォルトは 5 )
@@ -182,7 +181,7 @@ window.generateGameLogic = (sizeX, sizeY, bomNum, onGameOver, onGameClear) ->
 	API.open = open
 	API.putFlag = putFlag
 	API.dumpBoards = dumpBoards	
-	API.getUnderBoard = -> return $.extend true, [], UNDER_BOARD
-	API.getFrontBoard = -> return $.extend true, [], FRONT_BOARD
+	API.getUnderBoard = -> return UNDER_BOARD
+	API.getFrontBoard = -> return FRONT_BOARD
 	return API
 

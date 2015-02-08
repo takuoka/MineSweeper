@@ -199,10 +199,10 @@
     API.putFlag = putFlag;
     API.dumpBoards = dumpBoards;
     API.getUnderBoard = function() {
-      return $.extend(true, [], UNDER_BOARD);
+      return UNDER_BOARD;
     };
     API.getFrontBoard = function() {
-      return $.extend(true, [], FRONT_BOARD);
+      return FRONT_BOARD;
     };
     return API;
   };

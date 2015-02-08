@@ -46,6 +46,7 @@ window.generateGame = (_parentId, _xSize, _ySize, _bombNum, onGameOver, onGameCl
 
 	#この関数の最後に呼ぶ
 	initGame = ->
+		# gameLogic.js の 実行
 		gameLogic = generateGameLogic xSize, ySize, bombNum, onGameOver, onGameClear
 		createTable()
 		updateTable()

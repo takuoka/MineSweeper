@@ -1,9 +1,32 @@
 
 
-# -------------- events -----------------
+
+
+# ------------ element variables --------------
+
+el_spreadWrapper = null
+el_gameEndArea = null
+el_startScreen = null
+el_bombInfoNum = null
+el_spreadBg = null
+el_timerElm = null
+getElements = ->
+	el_startScreen = document.getElementById "startScreen"
+	el_spreadWrapper = document.getElementById "spreadWrapper"
+	el_gameEndArea = document.getElementById "gameEndArea"
+	el_bombInfoNum = document.getElementById "bombInfoNum"
+	el_spreadBg = document.getElementById "spreadBg"
+	el_timerElm = document.getElementById "timer"
+
+
+
+
+
+
+# -------------- events -------------------------------
 
 window.onload = ->
-	window.startValidation()# startPage.coffeeの初期化
+	window.startValidation()# startPage.coffeeの実行
 	getElements()
 
 window.onClickStartButton = ->
@@ -11,19 +34,21 @@ window.onClickStartButton = ->
 		gameStart()
 
 window.onClickRetryButton = ->
-	startScreen = document.getElementById "startScreen"
-	fadeIn startScreen, ->
+	fadeIn el_startScreen, ->
 		hideEndScreen()
 
 
 
+
+# セルをクリックしたカーソルの位置を保持して、
+# クリア時とゲームオーバー時に使用する
 clickedX = null
 clickedY = null
+
+# この３つのイベントハンドラ は gameFront.js に 渡して コールバックをうける
 onClickCell = (e) ->
 	clickedX = e.pageX - 50#謎のズレ
 	clickedY = e.pageY - 50#謎のズレ
-
-
 onGameOver = ->
 	stopTimer()
 	showGameOverScreen()
@@ -32,26 +57,12 @@ onGameClear = ->
 	showGameClearScreen()
 
 
-# ------------ element variables --------------
-
-spreadWrapper = null
-gameEndArea = null
-startScreen　= null
-bombInfoNum = null
-spreadBg = null
-timerElm = null
-getElements = ->
-	startScreen = document.getElementById "startScreen"
-	spreadWrapper = document.getElementById "spreadWrapper"
-	gameEndArea = document.getElementById "gameEndArea"
-	bombInfoNum = document.getElementById "bombInfoNum"
-	spreadBg = document.getElementById "spreadBg"
-	timerElm = document.getElementById "timer"
 
 
 
 
-# -------------- game start and reset -----------------
+
+# -------------- game start ---------------------
 
 gameStart = ->
 	resetTimer()
@@ -60,10 +71,12 @@ gameStart = ->
 	ySize       = document.getElementById("ySize").value
 	bombNum     = document.getElementById("bombNum").value
 
+	# gameFront.js の 実行
 	generateGame "game", xSize, ySize, bombNum, onGameOver, onGameClear, onClickCell
-	bombInfoNum.innerHTML = bombNum
 
-	fadeOut startScreen
+	el_bombInfoNum.innerHTML = bombNum
+
+	fadeOut el_startScreen
 
 	startTimer()
 
@@ -75,43 +88,45 @@ deleteGame = ->
 
 
 
-# ---------------- gameover & clear Screen -------------------------
+
+
+# ---------------- GameOver & GameClear の show と hide -------------------------
 
 showGameClearScreen = ->
-	removeClass spreadWrapper, "gameOver"
-	removeClass gameEndArea, "gameOver"
-	removeClass spreadWrapper, "gameClear"
-	removeClass gameEndArea, "gameClear"
+	removeClass el_spreadWrapper, "gameOver"
+	removeClass el_gameEndArea, "gameOver"
+	removeClass el_spreadWrapper, "gameClear"
+	removeClass el_gameEndArea, "gameClear"
 
-	addClass spreadWrapper, "gameClear"
-	addClass gameEndArea, "gameClear"
+	addClass el_spreadWrapper, "gameClear"
+	addClass el_gameEndArea, "gameClear"
 	showEndScreen()
 showGameOverScreen = ->
-	removeClass spreadWrapper, "gameClear"
-	removeClass gameEndArea, "gameClear"
-	removeClass spreadWrapper, "gameOver"
-	removeClass gameEndArea, "gameOver"
+	removeClass el_spreadWrapper, "gameClear"
+	removeClass el_gameEndArea, "gameClear"
+	removeClass el_spreadWrapper, "gameOver"
+	removeClass el_gameEndArea, "gameOver"
 
-	addClass spreadWrapper, "gameOver"
-	addClass gameEndArea, "gameOver"
+	addClass el_spreadWrapper, "gameOver"
+	addClass el_gameEndArea, "gameOver"
 	showEndScreen()
 
 
 
 showEndScreen = ->
-	gameEndArea.style.display = "block"
-	spreadWrapper.style.display = "block"
-	spreadBg.style.top = clickedY + "px"
-	spreadBg.style.left = clickedX + "px"
+	el_gameEndArea.style.display = "block"
+	el_spreadWrapper.style.display = "block"
+	el_spreadBg.style.top = clickedY + "px"
+	el_spreadBg.style.left = clickedX + "px"
 	wait 100, ->
-		spreadBg.className = "spread"
+		el_spreadBg.className = "spread"
 		wait 300, ->
-			addClass gameEndArea, "show"
+			addClass el_gameEndArea, "show"
 hideEndScreen = ->
-	removeClass spreadBg, "spread"
-	removeClass gameEndArea, "show"
-	spreadWrapper.style.display = "none"
-	gameEndArea.style.display = "none"
+	removeClass el_spreadBg, "spread"
+	removeClass el_gameEndArea, "show"
+	el_spreadWrapper.style.display = "none"
+	el_gameEndArea.style.display = "none"
 
 
 
@@ -125,24 +140,26 @@ startTimer = ->
 	tick = ->
 		t = getElapsedTime startDate
 		timerString = t.minute + ":" + t.sec
-		timerElm.innerHTML = timerString
+		el_timerElm.innerHTML = timerString
 	tickInterval = setInterval tick, 1000
 
 stopTimer = -> clearInterval tickInterval
 resetTimer = ->
 	stopTimer()
-	timerElm.innerHTML = "00:00"
+	el_timerElm.innerHTML = "00:00"
 
 
 
 # ---------------- util function -------------------------
 
-wait = (time, callback)-> setTimeout callback, time
+wait = (time, callback)->
+	setTimeout callback, time
+
+addClass = (elm, className) ->
+	elm.className = elm.className + ' ' + className 
 
 
-window.addClass = (elm, className) -> elm.className = elm.className + ' ' + className 
-
-window.removeClass = (elm, removeClassName) ->
+removeClass = (elm, removeClassName) ->
     classString = elm.className
     nameIndex = classString.indexOf removeClassName
 
@@ -181,7 +198,9 @@ getElapsedTime = (startDate)->
 	elapsedTime.sec    = zeroPadding_2 sec
 	return elapsedTime
 
-zeroPadding_2 = (num) -> return ("0" + num).slice(-2)
+
+zeroPadding_2 = (num) ->
+	return ("0" + num).slice(-2)
 
 
 
