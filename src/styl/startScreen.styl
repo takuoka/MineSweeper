@@ -1,8 +1,5 @@
 
 
-//Google Chrome のinput要素 フォーカス時の線を消す
-input,input[type="text"],input[type="password"],textarea,select
-	outline none
 
 
 #startScreen
@@ -21,39 +18,42 @@ input,input[type="text"],input[type="password"],textarea,select
 		font-weight bold
 		text-align center
 
-.row
-	margin-top 30px
-	p
-		text-align center
-		input, span
-			font-size 40px
-			width 60px
+	.row
+		margin-top 30px
+
+		p
 			text-align center
-			margin 5px
-			background-color rgba(0,0,0, 0)//0.01)
-			border-style none
-		
-		input
-			color white
-			border-bottom:3px white dashed;
 
-		#bombNum
-			width 80px
+			input, span
+				font-size 40px
+				width 60px
+				text-align center
+				margin 5px
+				background-color rgba(0,0,0, 0)//0.01)
+				border-style none		
+			input
+				color white
+				border-bottom:3px white dashed;
+				outline none//Chromeのフォーカス時の線を消す
+			input#bombNum
+				width 80px
 
-		a#startButton
-			transition-property background-color, color
-			transition-duration 0.3s
-			font-size 50px
-			font-weight bold
-			padding 10px
-			background-color rgba(0,0,0, 0)
-			&:hover
-				opacity 0.9
-				background-color rgba(0,0,0, 0.1)
-			&:active
-				opacity 0.7
-				background-color rgba(255,255,255, 0.9)
-				color rgba(0,0,0, 0.9)
 
-			&.invalid
-				color rgba(255,255,255, 0.3)
+			a#startButton
+				transition-property background-color, color
+				transition-duration 0.3s
+				font-size 50px
+				font-weight bold
+				padding 10px
+				background-color rgba(0,0,0, 0)
+
+				&:hover
+					opacity 0.9
+					background-color rgba(0,0,0, 0.1)
+				&:active
+					opacity 0.7
+					background-color rgba(255,255,255, 0.9)
+					color rgba(0,0,0, 0.9)
+
+				&.invalid
+					color rgba(255,255,255, 0.3)

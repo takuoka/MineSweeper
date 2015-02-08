@@ -1,9 +1,4 @@
 
-
-
-
-
-
 #gameScreen
 	background-color #f5b600
 	min-height 500px//後で調節
@@ -45,69 +40,69 @@
 //--------------------------------------------
 
 
-cellSize = 23px
-fontSize = 12px
+	cellSize = 23px
+	fontSize = 12px
 
-table
-	border-width 8px
-	border-style solid
-	border-spacing 0px
-	border-color #999
-	background-color #fff
-	tr
-		td
-			div
-				transition-property background-color
-				transition-duration 0.5s
-				display table-cell
-				width cellSize
-				height cellSize
-				margin 0px
+	table
+		border-width 8px
+		border-style solid
+		border-spacing 0px
+		border-color #999
+		background-color #fff
+		tr
+			td
+				div
+					transition-property background-color
+					transition-duration 0.5s
+					display table-cell
+					width cellSize
+					height cellSize
+					margin 0px
 
-				font-size fontSize
-				text-align: center
-				vertical-align middle
+					font-size fontSize
+					text-align: center
+					vertical-align middle
 
-				border-width 2px
-				border-style dashed
-				border-color #ddd
+					border-width 2px
+					border-style dashed
+					border-color #ddd
 
 
-				&.closed, &.flag
-					border-style solid
-					border-color #aaa
-					background-color #ccc
-					&:hover
-						opacity 0.7
-					&:active
-						opacity 0.5
+					&.closed, &.flag
+						border-style solid
+						border-color #aaa
+						background-color #ccc
+						&:hover
+							opacity 0.7
+						&:active
+							opacity 0.5
 
-				&.flag
-					background-color #c97aca
+					&.flag
+						background-color #c97aca
 
-					
-				&.zero
-					background-color white
-				&.number
-					background-color white
-				&.n1:after
-					content "1"
-				&.n2:after
-					content "2"
-				&.n3:after
-					content "3"
-				&.n4:after
-					content "4"
-				&.n5:after
-					content "5"
-				&.n6:after
-					content "6"
-				&.n7:after
-					content "7"
-				&.n8:after
-					content "8"
-					
+						
+					&.zero
+						background-color white
+					&.number
+						background-color white
+					&.n1:after
+						content "1"
+					&.n2:after
+						content "2"
+					&.n3:after
+						content "3"
+					&.n4:after
+						content "4"
+					&.n5:after
+						content "5"
+					&.n6:after
+						content "6"
+					&.n7:after
+						content "7"
+					&.n8:after
+						content "8"
+						
 
-				&.bomb
-					background-color #f55f62
+					&.bomb
+						background-color #f55f62
 

@@ -2,33 +2,29 @@ doctype html
 html(lang="ja")
 
 	head
-		title= MineSweeper
+		title MineSweeper!
 		link(rel='stylesheet', href='css/main.css')
 		link(rel='stylesheet', href='css/startScreen.css')
 		link(rel='stylesheet', href='css/gameScreen.css')
 		link(rel='stylesheet', href='css/endScreen.css')
 
-	body
 
+
+	body
 		.screen#gameScreen
 			.wrapper
 				h2 Mine Sweeper
-
 				#gameArea
 					p#timer 00:00
 					#game
 					p#bombInfo bomb × <span id="bombInfoNum">5</span>
 
-				//- #giveupButtonArea
-				//- 	p#giveupText give up
-				//- 	p (・ェ・`=)
+
 
 
 		//- ゲームオーバーとクリア時に広がる背景
 		#spreadWrapper
 			#spreadBg
-
-
 		.screen#gameEndArea
 			.wrapper
 				h1
@@ -40,19 +36,16 @@ html(lang="ja")
 		.screen#startScreen
 			.wrapper
 				h1 Mine Sweeper!
-
 				.row#sizeSelecter
 					p
 						input#xSize(required value="5" maxlength="2")
 						span ×
 						input#ySize(required value="5" maxlength="2")
-
 				.row#bombNumSelecter
 					p
 						span bomb
 						span ×
 						input#bombNum(required value="5" maxlength="3")
-
 				.row#startButtonArea
 					p
 						a#startButton(onclick="onClickStartButton();") start!

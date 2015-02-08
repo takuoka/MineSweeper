@@ -1,5 +1,4 @@
 
-
 window.generateGameLogic = (sizeX, sizeY, bomNum, onGameOver, onGameClear) ->
 
 	#盤面のサイズ, 地雷の数 (デフォルトは 5 )
