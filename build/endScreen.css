@@ -27,7 +27,7 @@
           transform: scale(30);
 }
 #spreadWrapper.gameOver #spreadBg {
-  background-color: rgba(255,0,0,0.5);
+  background-color: rgba(255,0,0,0.6);
 }
 #spreadWrapper.gameClear #spreadBg {
   background-color: rgba(0,255,0,0.5);
@@ -48,8 +48,12 @@
   color: #000;
 }
 #gameEndArea .wrapper h1 {
-  opacity: 0.8;
-  filter: alpha(opacity=80);
+  margin-top: 100px;
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+  font-size: 60px;
+  font-weight: bold;
+  text-align: center;
 }
 #gameEndArea .wrapper p {
   text-align: center;
@@ -59,21 +63,18 @@
   filter: alpha(opacity=80);
   transition-property: background-color, color;
   transition-duration: 0.3s;
-  font-size: 50px;
+  font-size: 40px;
   font-weight: bold;
   padding: 10px;
-  background-color: rgba(0,0,0,0);
+  background-color: rgba(255,255,255,0);
 }
 #gameEndArea .wrapper p a:hover {
-  opacity: 0.9;
-  filter: alpha(opacity=90);
-  background-color: #000;
-  color: #fff;
+  background-color: rgba(255,255,255,0.3);
 }
 #gameEndArea .wrapper p a:active {
   opacity: 0.7;
   filter: alpha(opacity=70);
-  background-color: rgba(0,0,0,0.9);
+  background-color: rgba(255,255,255,0.3);
 }
 #gameEndArea.gameOver h1:before {
   content: "GameOver";

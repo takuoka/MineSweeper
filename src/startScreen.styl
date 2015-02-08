@@ -1,5 +1,9 @@
 
 
+//Google Chrome のinput要素 フォーカス時の線を消す
+input,input[type="text"],input[type="password"],textarea,select
+	outline none
+
 
 #startScreen
 	z-index 500
@@ -10,11 +14,7 @@
 
 	transition-property opacity
 	transition-duration 0.5s
-	opacity 1
-	// transform: translateY(0px)
-	// &.hidden
-		// transform: translateY(-130%)
-	
+	opacity 1	
 
 	h1
 		font-size 80px
@@ -52,14 +52,8 @@
 				background-color rgba(0,0,0, 0.1)
 			&:active
 				opacity 0.7
-				background-color rgba(80,200,80, 0.9)
+				background-color rgba(255,255,255, 0.9)
+				color rgba(0,0,0, 0.9)
 
 			&.invalid
 				color rgba(255,255,255, 0.3)
-				
-				
-
-
-//Google Chrome のinput要素 フォーカス時の線を消す
-input,input[type="text"],input[type="password"],textarea,select
-	outline none

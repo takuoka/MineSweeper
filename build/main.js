@@ -2,7 +2,7 @@
   var bombInfoNum, clickedX, clickedY, deleteGame, fadeIn, fadeOut, gameEndArea, gameStart, getElapsedTime, getElements, hideEndScreen, onClickCell, onGameClear, onGameOver, resetTimer, showEndScreen, showGameClearScreen, showGameOverScreen, spreadBg, spreadWrapper, startScreen, startTimer, stopTimer, tickInterval, timerElm, wait, zeroPadding_2;
 
   window.onload = function() {
-    startValidation();
+    window.startValidation();
     return getElements();
   };
 
@@ -86,12 +86,20 @@
   };
 
   showGameClearScreen = function() {
+    removeClass(spreadWrapper, "gameOver");
+    removeClass(gameEndArea, "gameOver");
+    removeClass(spreadWrapper, "gameClear");
+    removeClass(gameEndArea, "gameClear");
     addClass(spreadWrapper, "gameClear");
     addClass(gameEndArea, "gameClear");
     return showEndScreen();
   };
 
   showGameOverScreen = function() {
+    removeClass(spreadWrapper, "gameClear");
+    removeClass(gameEndArea, "gameClear");
+    removeClass(spreadWrapper, "gameOver");
+    removeClass(gameEndArea, "gameOver");
     addClass(spreadWrapper, "gameOver");
     addClass(gameEndArea, "gameOver");
     return showEndScreen();

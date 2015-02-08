@@ -7,9 +7,9 @@ window.generateGameLogic = (sizeX, sizeY, bomNum, onGameOver, onGameClear) ->
 	SIZE_Y   = 5
 	BOMB_NUM = 5
 	#引数があれば代入
-	SIZE_X   = sizeX if sizeX
-	SIZE_Y   = sizeY if sizeY
-	BOMB_NUM = bomNum if bomNum
+	SIZE_X   = parseInt sizeX if sizeX
+	SIZE_Y   = parseInt sizeY if sizeY
+	BOMB_NUM = parseInt bomNum if bomNum
 
 
 
@@ -63,25 +63,25 @@ window.generateGameLogic = (sizeX, sizeY, bomNum, onGameOver, onGameClear) ->
 	open = (x, y) ->
 
 		result = UNDER_BOARD[y][x]
+
 		FRONT_BOARD[y][x] = result
 
 		#クリアとゲームオーバーの判定
-		isCleared = isClearedGame()
 		isGameover = result is BOMB_CHAR
+		isCleared = isClearedGame()
 
-		#クリアかゲームオーバーだった場合は全てを開ける。	
-		if isCleared or isGameover
-			openAll()
-
-		#クリアかゲームオーバーだったらサインを返す
-		if isCleared
-			onGameClear()
-			return
+		#クリアかゲームオーバーだった場合は全てを開ける。(再帰ではない)
+		#コールバック関数読んで終わる	
 		if isGameover
 			onGameOver()
+			openAll()
+			return
+		if isCleared
+			onGameClear()
+			openAll()
 			return
 
-		# もし 0 なら 周りのマスも開ける
+		# もし 0 なら 周りのマスも開ける (再帰)
 		if result is 0
 			getSorroundingPlace x, y, (sx, sy)->
 				if FRONT_BOARD[sy][sx] is COVER_CHAR
@@ -90,35 +90,28 @@ window.generateGameLogic = (sizeX, sizeY, bomNum, onGameOver, onGameClear) ->
 		return
 
 
-	putFlag = (x, y) ->
-		if FRONT_BOARD[y][x] is COVER_CHAR
-			FRONT_BOARD[y][x] = FLAG_CHAR
-		else if FRONT_BOARD[y][x] is FLAG_CHAR
-			FRONT_BOARD[y][x] = COVER_CHAR
-
-
 
 	# クリアしたかどうかの判定
 	isClearedGame = ->
-		isCleared = true
-		numOfCoverCell = 0
-
 		ySize = FRONT_BOARD.length
 		xSize = FRONT_BOARD[0].length
 
+		numOfCoverCell = 0
+
+		#まだ開けてないマスを数える
 		for y in [0..ySize-1]
 			for x in [0..xSize-1]
-
-				if FRONT_BOARD[y][x] is COVER_CHAR or FRONT_BOARD[y][x] is FLAG_CHAR
+				cell = FRONT_BOARD[y][x]
+				if cell is COVER_CHAR or cell is FLAG_CHAR
 					numOfCoverCell += 1
 
-					if UNDER_BOARD[y][x] isnt BOMB_CHAR
-						isCleared = false
-
-		if numOfCoverCell is 0
-			return false
+		#開けてないマスと爆弾の数が同じ場合のみクリアー
+		if numOfCoverCell is BOMB_NUM
+			return true
 		else
-			return isCleared
+			return false
+
+
 
 
 	#クリアした時 と ゲームオーバーした時に全部開く	
@@ -128,6 +121,13 @@ window.generateGameLogic = (sizeX, sizeY, bomNum, onGameOver, onGameClear) ->
 		for y in [0..ySize-1]
 			for x in [0..xSize-1]
 				FRONT_BOARD[y][x] = UNDER_BOARD[y][x]
+
+
+	putFlag = (x, y) ->
+		if FRONT_BOARD[y][x] is COVER_CHAR
+			FRONT_BOARD[y][x] = FLAG_CHAR
+		else if FRONT_BOARD[y][x] is FLAG_CHAR
+			FRONT_BOARD[y][x] = COVER_CHAR
 
 
 	dumpBoards = ->
