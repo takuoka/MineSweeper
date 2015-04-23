@@ -1,4 +1,19 @@
 
+# gameFront.js にて モジュールとして使用されている	
+
+# マインスイーパーのロジックが記述してある
+# 全てのマスの管理もここで行う。
+
+
+# 以下のメソッドを持ったオブジェクトを返す。
+# API.open()
+# API.putFlag()
+# API.getUnderBoard()
+# API.getFrontBoard()
+# API.dumpBoards()
+
+# ゲームオーバーとクリアー時のイベントハンドラを引数にもつ。
+
 window.generateGameLogic = (sizeX, sizeY, bomNum, onGameOver, onGameClear) ->
 
 	#盤面のサイズ, 地雷の数 (デフォルトは 5 )
